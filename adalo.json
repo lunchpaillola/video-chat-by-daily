@@ -1,0 +1,12 @@
+{
+  "author": "Daily",
+  "description": "An Adalo component for creating and managing video chats with Daily",
+  "logo": "./logo.png",
+  "displayName": "Video chat by Daily",
+  "components": [
+    {
+      "name": "VideoChatByDaily",
+      "manifest": "./src/components/VideoChatByDaily/manifest.json"
+    }
+  ]
+}
