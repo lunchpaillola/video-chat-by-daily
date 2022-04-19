@@ -198,6 +198,7 @@ const DailyVideoChat = (props) => {
 			})
 			.catch(error => {
 					console.error('Error:', error);
+					getError(error);
 			});
 
 };
@@ -231,6 +232,7 @@ const DailyVideoChat = (props) => {
 			})
 			.catch(error => {
 					console.error('Error:', error);
+					getError(error);
 			});
 
 };
@@ -255,6 +257,7 @@ const DailyVideoChat = (props) => {
 			})
 			.catch(error => {
 					console.error('Error:', error);
+					getError(error);
 			});
 
 };
@@ -298,9 +301,35 @@ const DailyVideoChat = (props) => {
 			})
 			.catch(error => {
 					console.error('Error:', error);
+					getError(error);
 			});
 
 };
+
+//error handling
+const errorHandling = getError();
+
+function getError(e) {
+	
+	if (!apikey && createRoomButton.enabled && !editor) return 'API Key is not set in the Daily video component';
+	if (!apikey && deleteRoomButton.enabled && !editor) return 'API Key is not set in the Daily video component';
+	if (!apikey && updateRoomSettingsButton.enabled && !editor) return 'API Key is not set in the Daily video component';
+	if (!apikey && createMeetingTokenButton.enabled) return 'API Key is not set in the Daily video component';
+	if (!room_name_u && updateRoomSettingsButton.enabled) return 'Room name is not set in the "Update Room Button" tab';
+	if (!room_name_d && deleteRoomButton.enabled) return 'Room name is not set in the "Delete Room Button" tab';
+	if (!room_name && createMeetingTokenButton.enabled) return 'Room name is not set in the "Create Meeting Token" tab';
+	if (!url &&  videoCall.enabled) return 'Room url is not set in the "Video Call" tab';
+	if (e) return e;
+}
+
+if(errorHandling && !editor){
+	return(
+		<View style={styles.statusWrapper}>
+							<Text style={styles.statusText}> {errorHandling}</Text>
+	</View> 
+) 
+};
+
 
 	
 //function for joining a call
@@ -354,6 +383,7 @@ const DailyVideoChat = (props) => {
 
 				}, [])};
  
+				//Styles and rendering
 	if ( editor ) {
 		return (
 				<View style={{ width: '100%', height: '100%' }}>
@@ -393,15 +423,16 @@ const styles = StyleSheet.create({
 		width: '100%',
 		height: '100%',
 },
-button: {
-	alignItems: 'center',
-	justifyContent: 'center',
-	width: '100%',
-	height: 56,
-	marginTop: 0,
-	padding: 0,
-	borderRadius: 4,
-	backgroundColor: 'black',
+statusWrapper: {
+	backgroundColor: '#d30',
+	padding: 16,
+	borderRadius: 5,
+	marginBottom: 16,
+},
+statusText: {
+	color: '#fff',
+	fontSize: 14,
+	fontWeight: '600',
 },
 	text:{
 		fontSize: "@body",
