@@ -1,8 +1,10 @@
 {
   "author": "Daily",
-  "description": "An Adalo component for creating and managing video chats with Daily",
+  "description": "Quickly add reliable video chats or video calls to your app with the official Daily video component. Great for your education, social, fitness, event, or sales tool apps! The component includes custom colors, host controls, a pre-join call UX, and the ability to create, update and delete video rooms. Use the component for any of your video communication needs.",
   "logo": "./logo.png",
-  "displayName": "Video chat by Daily",
+  "displayName": "Video Chat and Conferencing",
+  "supportURL": "help@daily.co",
+  "requiresThirdPartySubscription": true,
   "components": [
     {
       "name": "VideoChatByDaily",
