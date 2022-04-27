@@ -1,5 +1,5 @@
 {
-  "displayName": "Video Chat by Daily",
+  "displayName": "Video Chat",
   "defaultWidth": 600,
   "defaultHeight": 500,
   "components": "./index.js",
