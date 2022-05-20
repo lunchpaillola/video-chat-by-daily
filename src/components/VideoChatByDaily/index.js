@@ -191,9 +191,10 @@ const DailyVideoChat = (props) => {
 						const name = result.name;
 			   const roomUrl = result.url;
 						const id = result.id;
+						const privacy = result.privacy;
 					
 
-			   if (roomCreated) roomCreated(name,roomUrl, id);
+			   if (roomCreated) roomCreated(name,roomUrl, id, privacy);
 
 			})
 			.catch(error => {
@@ -224,7 +225,6 @@ const DailyVideoChat = (props) => {
 				.then((response) => response.json())
 				.then(result => {
 					console.log('Success:', result);
-					console.log('token', result.token)
 						const token = result.token;
 
 			   if (meeting_token_created) meeting_token_created(token);
@@ -294,9 +294,10 @@ const DailyVideoChat = (props) => {
 						const name = result.name;
 			   const roomUrl = result.url;
 						const id = result.id;
+						const privacy = result.privacy;
 					
 
-			   if (roomUpdated) roomUpdated(name,roomUrl, id);
+			   if (roomUpdated) roomUpdated(name,roomUrl, id, privacy);
 
 			})
 			.catch(error => {
@@ -344,12 +345,10 @@ if(errorHandling && !editor){
 								//events
 								callFrame.on('left-meeting', ()=> {
 									if (leftMeeting) leftMeeting();
-									console.log('hey left-meeting', leftMeeting);
 								});
 
 								callFrame.on('joined-meeting', ()=> {
 									if (joinedMeeting) joinedMeeting();
-									console.log('hey joined-meeting', joinedMeeting);
 								});
 
 								callFrame.setTheme({

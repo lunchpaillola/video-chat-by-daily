@@ -18,6 +18,11 @@
     "react-native-web": "^0.9.5"
   },
   "dependencies": {
-    "@daily-co/daily-js": "^0.24.0"
+    "@daily-co/daily-js": "^0.24.0",
+    "@react-navigation/native": "^6.0.10",
+    "react-native": "^0.68.2",
+    "react-on-screen": "^2.1.1",
+    "react-visibility-sensor": "^5.1.1",
+    "rooks": "^5.11.0"
   }
 }
