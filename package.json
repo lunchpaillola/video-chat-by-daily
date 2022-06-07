@@ -1,7 +1,7 @@
 {
   "name": "video-chat-by-daily",
   "description": "Quickly add reliable video chats or video calls to your app with the official Daily video component. Great for your education, social, fitness, event, or sales tool apps! The component includes custom colors, host controls, a pre-join call UX, and the ability to create, update and delete video rooms. Use the component for any of your video communication needs.",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "main": "index.js",
   "license": "ISC",
   "author": "Daily",
@@ -11,16 +11,13 @@
     "publish": "adalo publish"
   },
   "devDependencies": {
-    "@adalo/cli": "^0.0.54",
+    "@adalo/cli": "^0.0.55",
     "react": "^16.9.0",
     "react-art": "^16.6.0",
     "react-dom": "^16.9.0",
     "react-native-web": "^0.9.5"
   },
   "dependencies": {
-    "@daily-co/daily-js": "^0.24.0",
-    "@react-navigation/native": "^6.0.10",
-    "react-native": "^0.63.2",
-    "rooks": "^5.11.0"
+    "@daily-co/daily-js": "^0.24.0"
   }
 }
