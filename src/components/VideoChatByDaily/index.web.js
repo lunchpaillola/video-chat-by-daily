@@ -18,18 +18,6 @@ const DailyVideoChat = (props) => {
   const {
     token,
     url,
-    accent,
-    accentText,
-    background,
-    backgroundAccent,
-    baseText,
-    border,
-    mainAreaBg,
-    mainAreaBgAccent,
-    mainAreaText,
-    supportiveText,
-    joinedMeeting,
-    leftMeeting,
   } = videoCall;
 
   //createRoomButton props
@@ -343,20 +331,6 @@ const DailyVideoChat = (props) => {
         if (joinedMeeting) joinedMeeting();
       });
 
-      callFrame.setTheme({
-        colors: {
-          accent: accent,
-          accentText: accentText,
-          background: background,
-          backgroundAccent: backgroundAccent,
-          baseText: baseText,
-          border: border,
-          mainAreaBg: mainAreaBg,
-          mainAreaBgAccent: mainAreaBgAccent,
-          mainAreaText: mainAreaText,
-          supportiveText: supportiveText,
-        },
-      });
       if (token && videoCall.enabled) {
         callFrame.join({
           url: url,

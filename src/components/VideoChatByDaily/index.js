@@ -17,18 +17,6 @@ const DailyVideoChat = (props) => {
   const {
     token,
     url,
-    accent,
-    accentText,
-    background,
-    backgroundAccent,
-    baseText,
-    border,
-    mainAreaBg,
-    mainAreaBgAccent,
-    mainAreaText,
-    supportiveText,
-    joinedMeeting,
-    leftMeeting,
   } = videoCall;
 
   //createRoomButton props
@@ -314,6 +302,11 @@ const DailyVideoChat = (props) => {
       });
   };
 
+
+  //url for the video call
+  const videoCallURL = token ? url + "?t=" + token : url;
+ 
+
   //error handling
   const errorHandling = getError();
 
@@ -369,7 +362,7 @@ const DailyVideoChat = (props) => {
 					<View style={styles.wrapper}>
 						<View>
 						<WebView
-          source={{uri: url}}
+          source={{uri: videoCallURL}}
           domStorageEnabled={true}
           allowFileAccess={true}
           originWhitelist={['*']}
