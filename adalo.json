@@ -11,5 +11,7 @@
       "name": "VideoChatByDaily",
       "manifest": "./src/components/VideoChatByDaily/manifest.json"
     }
-  ]
+  ],
+  "iosInstallScript": "./scripts/install_ios.sh",
+  "androidInstallScript": "./scripts/install_android.sh"
 }

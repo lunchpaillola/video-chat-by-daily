@@ -1,6 +1,7 @@
-import { Image, Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useEffect } from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import DailyIframe from "@daily-co/daily-js";
 import videoImage from "./editor-image.png";
-import {WebView} from 'react-native-webview';
 
 const DailyVideoChat = (props) => {
   const {
@@ -111,7 +112,6 @@ const DailyVideoChat = (props) => {
     backgroundColor: createBackgroundColor,
     borderColor: createBorderColor,
     borderWidth: 2,
-    display: createRoomButton.enabled ? "flex" : "none",
   };
 
   const updateButtonStyle = {
@@ -125,7 +125,6 @@ const DailyVideoChat = (props) => {
     backgroundColor: updateBackgroundColor,
     borderColor: updateBorderColor,
     borderWidth: 2,
-    display: updateRoomSettingsButton.enabled ? "flex" : "none",
   };
 
   const deleteButtonStyle = {
@@ -139,7 +138,6 @@ const DailyVideoChat = (props) => {
     backgroundColor: deleteBackgroundColor,
     borderColor: deleteBorderColor,
     borderWidth: 2,
-    display: deleteRoomButton.enabled ? "flex" : "none",
   };
 
   const meetingTokenStyle = {
@@ -153,22 +151,7 @@ const DailyVideoChat = (props) => {
     backgroundColor: tokenBackgroundColor,
     borderColor: tokenBorderColor,
     borderWidth: 2,
-    display: createMeetingTokenButton.enabled ? "flex" : "none",
   };
-
-  const imageStyle = {
-    width: "100%",
-    height: 500,
-    resizeMode: "contain",
-    display: videoCall.enabled ? "flex" : "none",
-  };
-
-		const videoStyle ={
-			display: videoCall.enabled ? "flex" : "none",
-			width: "100%",
-			height: "100%",
-			padding: 0,
-	}
 
   //starting the button onPress functions
 
@@ -340,63 +323,174 @@ const DailyVideoChat = (props) => {
   if (errorHandling && !editor) {
     return (
       <View style={styles.statusWrapper}>
-        <Text style={styles.statusText}>{errorHandling}</Text>
+        <Text style={styles.statusText}> {errorHandling}</Text>
       </View>
     );
   }
-		
 
+  //function for joining a call
+  function JoinCall() {
+    useEffect(() => {
+      const parentElement = document.querySelector(".daily-call-element");
+      const callFrame = DailyIframe.createFrame(parentElement, {});
+
+      //events
+      callFrame.on("left-meeting", () => {
+        if (leftMeeting) leftMeeting();
+      });
+
+      callFrame.on("joined-meeting", () => {
+        if (joinedMeeting) joinedMeeting();
+      });
+
+      callFrame.setTheme({
+        colors: {
+          accent: accent,
+          accentText: accentText,
+          background: background,
+          backgroundAccent: backgroundAccent,
+          baseText: baseText,
+          border: border,
+          mainAreaBg: mainAreaBg,
+          mainAreaBgAccent: mainAreaBgAccent,
+          mainAreaText: mainAreaText,
+          supportiveText: supportiveText,
+        },
+      });
+      if (token && videoCall.enabled) {
+        callFrame.join({
+          url: url,
+          token: token,
+          showLeaveButton: true,
+          activeSpeakerMode: false,
+        });
+      }
+      if (!token && videoCall.enabled) {
+        callFrame.join({
+          url: url,
+          showLeaveButton: true,
+          activeSpeakerMode: false,
+        });
+      }
+    }, []);
+  }
+
+  //Styles and rendering
   if (editor) {
-  return (
-    <View style={styles.wrapper}>
-      <Image style={imageStyle} source={videoImage} />
-      <TouchableOpacity style={createButtonStyle}>
-        <Text style={createRoomButton.styles.createText}>{createText}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={deleteButtonStyle}>
-        <Text style={deleteRoomButton.styles.deleteText}>{deleteText}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={updateButtonStyle}>
-        <Text style={updateRoomSettingsButton.styles.updateText}>{updateText}</Text>
-      </TouchableOpacity>
-						<TouchableOpacity style={meetingTokenStyle}>
-							<Text style={createMeetingTokenButton.styles.tokenText}>{tokenText}</Text></TouchableOpacity>
-    </View>
-  );
-		}
-		if (!editor) {
-			return (
-					<View style={styles.wrapper}>
-						<View>
-						<WebView
-          source={{uri: url}}
-          domStorageEnabled={true}
-          allowFileAccess={true}
-          originWhitelist={['*']}
-          javaScriptEnabled={true}
-					useWebKit={true}
-          allowsInlineMediaPlayback={true}
+    return (
+      <View style={{ width: "100%", height: "100%" }}>
+        <img
+          src={videoImage}
           style={{
-            height: 600,
-            width: 400,
-          }}/> 
-										</View>
-							<TouchableOpacity style={createButtonStyle}>
-									<Text style={createRoomButton.styles.createText} onPress={createRoomAction}>{createText}</Text>
-							</TouchableOpacity>
-							<TouchableOpacity style={deleteButtonStyle} onPress={deleteRoomAction}>
-									<Text style={deleteRoomButton.styles.deleteText}>{deleteText}</Text>
-							</TouchableOpacity>
-							<TouchableOpacity style={updateButtonStyle} onPress={updateRoomAction}>
-									<Text style={updateRoomSettingsButton.styles.updateText}>{updateText}</Text>
-							</TouchableOpacity>
-							<TouchableOpacity style={meetingTokenStyle} onPress={meetingTokenAction}>
-								<Text style={createMeetingTokenButton.styles.tokenText}>{tokenText}</Text></TouchableOpacity>
-					</View>
-			);
-			}
-};
+            display: videoCall.enabled ? "block" : "none",
+            objectFit: "fill",
+            width: "100%",
+            height: "100%",
+            padding: 0,
+          }}
+        />
+        <div style={{ display: createRoomButton.enabled ? "block" : "none" }}>
+          <TouchableOpacity style={createButtonStyle}>
+            <Text style={createRoomButton.styles.createText}>{createText}</Text>
+          </TouchableOpacity>
+        </div>
+        <div style={{ display: deleteRoomButton.enabled ? "block" : "none" }}>
+          <TouchableOpacity style={deleteButtonStyle}>
+            <Text style={deleteRoomButton.styles.deleteText}>{deleteText}</Text>
+          </TouchableOpacity>
+        </div>
+        <div
+          style={{
+            display: updateRoomSettingsButton.enabled ? "block" : "none",
+          }}
+        >
+          <TouchableOpacity style={updateButtonStyle}>
+            <Text style={updateRoomSettingsButton.styles.updateText}>
+              {updateText}
+            </Text>
+          </TouchableOpacity>
+        </div>
+        <div
+          style={{
+            display: createMeetingTokenButton.enabled ? "block" : "none",
+          }}
+        >
+          <TouchableOpacity style={meetingTokenStyle}>
+            <Text style={createMeetingTokenButton.styles.tokenText}>
+              {tokenText}
+            </Text>
+          </TouchableOpacity>
+        </div>
+      </View>
+    );
+  }
 
+  if (!editor) {
+    return (
+      <View style={styles.container}>
+        <div
+          className="daily-call-element"
+          style={{
+            display: videoCall.enabled ? "block" : "none",
+            width: "100%",
+            height: "100%",
+            padding: 0,
+          }}
+        >
+          {" "}
+          {JoinCall()}{" "}
+        </div>
+        <div style={{ display: createRoomButton.enabled ? "block" : "none" }}>
+          <TouchableOpacity
+            style={createButtonStyle}
+            onPress={createRoomAction}
+          >
+            <Text style={createRoomButton.styles.createText}>
+              {" "}
+              {createText}
+            </Text>
+          </TouchableOpacity>
+        </div>
+        <div style={{ display: deleteRoomButton.enabled ? "block" : "none" }}>
+          <TouchableOpacity
+            style={deleteButtonStyle}
+            onPress={deleteRoomAction}
+          >
+            <Text style={deleteRoomButton.styles.deleteText}>{deleteText}</Text>
+          </TouchableOpacity>
+        </div>
+        <div
+          style={{
+            display: updateRoomSettingsButton.enabled ? "block" : "none",
+          }}
+        >
+          <TouchableOpacity
+            style={updateButtonStyle}
+            onPress={updateRoomAction}
+          >
+            <Text style={updateRoomSettingsButton.styles.updateText}>
+              {updateText}
+            </Text>
+          </TouchableOpacity>
+        </div>
+        <div
+          style={{
+            display: createMeetingTokenButton.enabled ? "block" : "none",
+          }}
+        >
+          <TouchableOpacity
+            style={meetingTokenStyle}
+            onPress={meetingTokenAction}
+          >
+            <Text style={createMeetingTokenButton.styles.tokenText}>
+              {tokenText}
+            </Text>
+          </TouchableOpacity>
+        </div>
+      </View>
+    );
+  }
+};
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -404,34 +498,28 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-		container: {
-			width: "100%",
-			height: "100%",
-	},
-	statusWrapper: {
-			backgroundColor: "#d30",
-			padding: 16,
-			borderRadius: 5,
-			marginBottom: 16,
-	},
-	statusText: {
-			color: "#fff",
-			fontSize: 14,
-			fontWeight: "600",
-	},
-	text: {
-			fontSize: 14,
-			lineHeight: 21,
-			fontWeight: "bold",
-			letterSpacing: 0.25,
-			color: "white",
-	},
-	video: {
-    marginTop: 20,
-    maxHeight: 200,
-    width: 320,
-    flex: 1
-  }
+  container: {
+    width: "100%",
+    height: "100%",
+  },
+  statusWrapper: {
+    backgroundColor: "#d30",
+    padding: 16,
+    borderRadius: 5,
+    marginBottom: 16,
+  },
+  statusText: {
+    color: "#fff",
+    fontSize: 14,
+    fontWeight: "600",
+  },
+  text: {
+    fontSize: 14,
+    lineHeight: 21,
+    fontWeight: "bold",
+    letterSpacing: 0.25,
+    color: "white",
+  },
 });
 
 export default DailyVideoChat;
