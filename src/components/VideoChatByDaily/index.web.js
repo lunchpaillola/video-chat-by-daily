@@ -1,9 +1,34 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import DailyIframe from "@daily-co/daily-js";
 import videoImage from "./editor-image.png";
 
 const DailyVideoChat = (props) => {
+  const elementRef = useRef();
+  
+  //function for joining a call
+  function JoinCall() {
+    useEffect(() => {
+      const parentElement = elementRef.current;
+      const callFrame = DailyIframe.createFrame(parentElement, {});
+      if (token && videoCall.enabled) {
+        callFrame.join({
+          url: url,
+          token: token,
+          showLeaveButton: true,
+          activeSpeakerMode: false,
+        });
+      }
+      if (!token && videoCall.enabled) {
+        callFrame.join({
+          url: url,
+          showLeaveButton: true,
+          activeSpeakerMode: false,
+        });
+      }
+    }, []);
+  };
+
   const {
     apikey,
     editor,
@@ -233,8 +258,10 @@ const DailyVideoChat = (props) => {
       .then((response) => response.json())
       .then((result) => {
         console.log("Success:", result);
+        const deletedResult = result.deleted;
 
-        if (room_deleted) room_deleted();
+        if (room_deleted) room_deleted(deletedResult);
+
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -299,8 +326,6 @@ const DailyVideoChat = (props) => {
       return "API Key is not set in the Daily video component";
     if (!room_name_u && updateRoomSettingsButton.enabled)
       return 'Room name is not set in the "Update Room Button" tab';
-    if (!room_name_d && deleteRoomButton.enabled)
-      return 'Room name is not set in the "Delete Room Button" tab';
     if (!room_name && createMeetingTokenButton.enabled)
       return 'Room name is not set in the "Create Meeting Token" tab';
     if (!url && videoCall.enabled)
@@ -314,39 +339,6 @@ const DailyVideoChat = (props) => {
         <Text style={styles.statusText}> {errorHandling}</Text>
       </View>
     );
-  }
-
-  //function for joining a call
-  function JoinCall() {
-    useEffect(() => {
-      const parentElement = document.querySelector(".daily-call-element");
-      const callFrame = DailyIframe.createFrame(parentElement, {});
-
-      //events
-      callFrame.on("left-meeting", () => {
-        if (leftMeeting) leftMeeting();
-      });
-
-      callFrame.on("joined-meeting", () => {
-        if (joinedMeeting) joinedMeeting();
-      });
-
-      if (token && videoCall.enabled) {
-        callFrame.join({
-          url: url,
-          token: token,
-          showLeaveButton: true,
-          activeSpeakerMode: false,
-        });
-      }
-      if (!token && videoCall.enabled) {
-        callFrame.join({
-          url: url,
-          showLeaveButton: true,
-          activeSpeakerMode: false,
-        });
-      }
-    }, []);
   }
 
   //Styles and rendering
@@ -401,27 +393,24 @@ const DailyVideoChat = (props) => {
 
   if (!editor) {
     return (
-      <View style={styles.container}>
+      <View style={{ width: "100%", height: "100%" }}>
         <div
-          className="daily-call-element"
+          ref={elementRef}
           style={{
             display: videoCall.enabled ? "block" : "none",
             width: "100%",
             height: "100%",
             padding: 0,
-          }}
-        >
-          {" "}
-          {JoinCall()}{" "}
+          }}>
+          {JoinCall()}
         </div>
-        <div style={{ display: createRoomButton.enabled ? "block" : "none" }}>
+        <div style={{ display: createRoomButton.enabled ? "block" : "none" }} >
           <TouchableOpacity
             style={createButtonStyle}
             onPress={createRoomAction}
           >
             <Text style={createRoomButton.styles.createText}>
-              {" "}
-              {createText}
+            {createText}
             </Text>
           </TouchableOpacity>
         </div>
@@ -472,10 +461,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  container: {
-    width: "100%",
-    height: "100%",
-  },
   statusWrapper: {
     backgroundColor: "#d30",
     padding: 16,
@@ -486,14 +471,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 14,
     fontWeight: "600",
-  },
-  text: {
-    fontSize: 14,
-    lineHeight: 21,
-    fontWeight: "bold",
-    letterSpacing: 0.25,
-    color: "white",
-  },
+  }
 });
 
 export default DailyVideoChat;

@@ -373,7 +373,15 @@
       {
         "name": "room_deleted",
         "displayName": "Additional actions after a room is deleted.",
-        "type": "action"
+        "type": "action",
+        "arguments": [
+          {
+            "type": "boolean",
+            "name": "deletedResult",
+            "displayName": "name"
+            
+          }
+        ]
       }
       ]
     },

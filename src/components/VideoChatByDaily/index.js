@@ -1,6 +1,7 @@
-import { Image, Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Image, Text, View, StyleSheet, TouchableOpacity, Alert, Platform } from "react-native";
 import videoImage from "./editor-image.png";
 import {WebView} from 'react-native-webview';
+import {checkMultiple, requestMultiple, PERMISSIONS} from 'react-native-permissions';
 
 const DailyVideoChat = (props) => {
   const {
@@ -250,8 +251,9 @@ const DailyVideoChat = (props) => {
       .then((response) => response.json())
       .then((result) => {
         console.log("Success:", result);
+        const deletedResult = result.deleted;
 
-        if (room_deleted) room_deleted();
+        if (room_deleted) room_deleted(deletedResult);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -302,6 +304,98 @@ const DailyVideoChat = (props) => {
       });
   };
 
+  //permissions update 
+  
+  if (Platform.OS === 'ios' && videoCall.enabled) {
+      const permissions = [];
+      permissions.push(PERMISSIONS.IOS.CAMERA);
+      permissions.push(PERMISSIONS.IOS.MICROPHONE);
+      
+      checkMultiple(permissions).then(statuses => {
+      requestMultiple(permissions).then(results => {
+      if (results[PERMISSIONS.IOS.CAMERA] === 'blocked') {
+        Alert.alert(
+          'Permission Request',
+          'We need Camera permission for video call. Please allow.',
+          [
+            {
+              text: 'OK',
+              onPress: () =>
+                openSettings().catch(err => {
+                  Alert.alert(err);
+                }),
+            },
+          ],
+          {cancelable: false},
+      )}
+  
+      if (results[PERMISSIONS.IOS.MICROPHONE] === 'blocked') {
+        Alert.alert(
+          'Permission Request',
+          'We need microphone permission for video call. Please allow.',
+          [
+            {
+              text: 'OK',
+              onPress: () =>
+                openSettings().catch(err => {
+                  Alert.alert(err);
+                }),
+            },
+          ],
+          {cancelable: false},
+      )
+      }
+      }).catch(error => {
+      })
+    }).catch(error => {
+    })
+    } else 
+    
+    if (Platform.OS === 'android' && videoCall.enabled) {
+      const permissions = [];
+      permissions.push(PERMISSIONS.ANDROID.CAMERA);
+      permissions.push(PERMISSIONS.ANDROID.RECORD_AUDIO);
+      checkMultiple(permissions).then(statuses => {
+        requestMultiple(permissions).then(results => {
+            if (results[PERMISSIONS.ANDROID.CAMERA] === 'blocked') {
+              Alert.alert(
+                'Permission Request',
+                'We need camera permission for video call. Please allow.',
+                [
+                  {
+                    text: 'OK',
+                    onPress: () =>
+                      openSettings().catch(err => {
+                        Alert.alert(err);
+                      }),
+                  },
+                ],
+                {cancelable: false},
+            )
+            }
+          
+            if (results[PERMISSIONS.ANDROID.RECORD_AUDIO] === 'blocked') {
+              Alert.alert(
+                'Permission Request',
+                'We need microphone permission for video call. Please allow.',
+                [
+                  {
+                    text: 'OK',
+                    onPress: () =>
+                      openSettings().catch(err => {
+                        Alert.alert(err);
+                      }),
+                  },
+                ],
+                {cancelable: false},
+            )
+            }
+        }).catch(error => {
+        })
+      }).catch(error => {
+      })
+    }
+
 
   //url for the video call
   const videoCallURL = token ? url + "?t=" + token : url;
@@ -321,8 +415,6 @@ const DailyVideoChat = (props) => {
       return "API Key is not set in the Daily video component";
     if (!room_name_u && updateRoomSettingsButton.enabled)
       return 'Room name is not set in the "Update Room Button" tab';
-    if (!room_name_d && deleteRoomButton.enabled)
-      return 'Room name is not set in the "Delete Room Button" tab';
     if (!room_name && createMeetingTokenButton.enabled)
       return 'Room name is not set in the "Create Meeting Token" tab';
     if (!url && videoCall.enabled)
@@ -357,10 +449,10 @@ const DailyVideoChat = (props) => {
     </View>
   );
 		}
-		if (!editor) {
+		if (!editor  && videoCall.enabled) {
 			return (
 					<View style={styles.wrapper}>
-						<View>
+						<View style={{width: "100%", height: "100%"}}>
 						<WebView
           source={{uri: videoCallURL}}
           domStorageEnabled={true}
@@ -370,12 +462,14 @@ const DailyVideoChat = (props) => {
 					useWebKit={true}
           allowsInlineMediaPlayback={true}
           style={{
-            height: 600,
-            width: 400,
+            flex: 1,
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}/> 
-										</View>
-							<TouchableOpacity style={createButtonStyle}>
-									<Text style={createRoomButton.styles.createText} onPress={createRoomAction}>{createText}</Text>
+						</View>
+							<TouchableOpacity style={createButtonStyle} onPress={createRoomAction}>
+									<Text style={createRoomButton.styles.createText}>{createText}</Text>
 							</TouchableOpacity>
 							<TouchableOpacity style={deleteButtonStyle} onPress={deleteRoomAction}>
 									<Text style={deleteRoomButton.styles.deleteText}>{deleteText}</Text>
@@ -387,7 +481,39 @@ const DailyVideoChat = (props) => {
 								<Text style={createMeetingTokenButton.styles.tokenText}>{tokenText}</Text></TouchableOpacity>
 					</View>
 			);
-			}
+		}
+    if (!editor  && createRoomButton.enabled) {
+			return (
+					
+							<TouchableOpacity style={createButtonStyle} onPress={createRoomAction}>
+									<Text style={createRoomButton.styles.createText}>{createText}</Text>
+							</TouchableOpacity>
+			);
+		}
+
+    if (!editor  && deleteRoomButton.enabled) {
+			return (
+					
+        <TouchableOpacity style={deleteButtonStyle} onPress={deleteRoomAction}>
+        <Text style={deleteRoomButton.styles.deleteText}>{deleteText}</Text>
+    </TouchableOpacity>
+			);
+		}
+
+    if (!editor  && updateRoomSettingsButton.enabled) {
+			return (
+        <TouchableOpacity style={updateButtonStyle} onPress={updateRoomAction}>
+        <Text style={updateRoomSettingsButton.styles.updateText}>{updateText}</Text>
+        </TouchableOpacity>
+			);
+		}
+
+    if (!editor  && createMeetingTokenButton.enabled) {
+			return (
+        <TouchableOpacity style={meetingTokenStyle} onPress={meetingTokenAction}>
+								<Text style={createMeetingTokenButton.styles.tokenText}>{tokenText}</Text></TouchableOpacity>
+			);
+		}
 };
 
 
@@ -397,10 +523,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-		container: {
-			width: "100%",
-			height: "100%",
-	},
 	statusWrapper: {
 			backgroundColor: "#d30",
 			padding: 16,
@@ -411,20 +533,7 @@ const styles = StyleSheet.create({
 			color: "#fff",
 			fontSize: 14,
 			fontWeight: "600",
-	},
-	text: {
-			fontSize: 14,
-			lineHeight: 21,
-			fontWeight: "bold",
-			letterSpacing: 0.25,
-			color: "white",
-	},
-	video: {
-    marginTop: 20,
-    maxHeight: 200,
-    width: 320,
-    flex: 1
-  }
+	}
 });
 
 export default DailyVideoChat;
