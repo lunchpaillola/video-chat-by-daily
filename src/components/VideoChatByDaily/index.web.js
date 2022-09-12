@@ -6,6 +6,28 @@ import videoImage from "./editor-image.png";
 const DailyVideoChat = (props) => {
   //props and constants
   const ref = useRef(null); 
+   //function for joining a call
+   function JoinCall() {
+    useEffect(() => {
+      const parentElement = ref.current;
+      const callFrame = DailyIframe.createFrame(parentElement, {});
+      if (token && videoCall.enabled) {
+        callFrame.join({
+          url: url,
+          token: token,
+          showLeaveButton: true,
+          activeSpeakerMode: false,
+        });
+      }
+      if (!token && videoCall.enabled) {
+        callFrame.join({
+          url: url,
+          showLeaveButton: true,
+          activeSpeakerMode: false,
+        });
+      }
+    }, []);
+  };
   const {
     apikey,
     editor,
@@ -17,7 +39,7 @@ const DailyVideoChat = (props) => {
   } = props;
 
   //videocallprops
-  const { token, url, enabled } = videoCall;
+  const { token, url } = videoCall;
 
   //createRoomButton props
   const {
@@ -80,38 +102,6 @@ const DailyVideoChat = (props) => {
     roomUpdated,
   } = updateRoomSettingsButton;
   
-  //function for joining a call
-  function JoinCall() {
-    useEffect(() => {
-      const parentElement = ref.current;
-      const callFrame = DailyIframe.createFrame(parentElement, {});
-
-
-        if (token && enabled && url) {
-          callFrame.join({
-            url: url,
-            token: token,
-            showLeaveButton: true,
-            activeSpeakerMode: false,
-          });
-        }
-        if (!token && enabled && url) {
-          callFrame.join({
-            url: url,
-            showLeaveButton: true,
-            activeSpeakerMode: false,
-          });
-        }
-      // }
-      callFrame.on("left-meeting", () => {
-        localStorage.setItem("leftMeeting", true);
-        callFrame.destroy();
-      });
-    }, []);
-  }
-
-  
-
   //Converting time to js
 
   const createRoomExp = Math.round(new Date(exp).getTime() / 1000);
