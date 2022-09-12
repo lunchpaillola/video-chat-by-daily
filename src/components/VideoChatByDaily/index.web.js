@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useMemo } from "react";
+import React, { useEffect, useRef } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import DailyIframe from "@daily-co/daily-js";
 import videoImage from "./editor-image.png";
@@ -79,29 +79,15 @@ const DailyVideoChat = (props) => {
     updateRounding,
     roomUpdated,
   } = updateRoomSettingsButton;
-
-  //when the coment renders, determines when it's in view. This stops from rejoining calls when on another page
-  function notInView(element) {
-    const rect = element.getBoundingClientRect();
-    return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    ); 
-  }
   
   //function for joining a call
   function JoinCall() {
     useEffect(() => {
-      const element = document.querySelector(".daily-element");
-      const hidden = notInView(element)
-      console.log (hidden, "this ran")
       const parentElement = ref.current;
       const callFrame = DailyIframe.createFrame(parentElement, {});
 
-      // if (!localStorage.getItem("leftMeeting")) {
-        if (token && enabled && url && !hidden) {
+
+        if (token && enabled && url) {
           callFrame.join({
             url: url,
             token: token,
@@ -109,7 +95,7 @@ const DailyVideoChat = (props) => {
             activeSpeakerMode: false,
           });
         }
-        if (!token && enabled && url && !hidden) {
+        if (!token && enabled && url) {
           callFrame.join({
             url: url,
             showLeaveButton: true,
@@ -415,7 +401,6 @@ const DailyVideoChat = (props) => {
     return (
       <View style={{ width: "100%", height: "100%" }}>
         <div
-          className="daily-element"
           ref={ref}
           style={{
             display: videoCall.enabled ? "block" : "none",
