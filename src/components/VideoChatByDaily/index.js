@@ -152,13 +152,6 @@ const DailyVideoChat = (props) => {
     display: videoCall.enabled ? "flex" : "none",
   };
 
-		const videoStyle ={
-			display: videoCall.enabled ? "flex" : "none",
-			width: "100%",
-			height: "100%",
-			padding: 0,
-	}
-
   //starting the button onPress functions
 
   const endpointurl = "https://api.daily.co/v1/";
@@ -449,7 +442,7 @@ const DailyVideoChat = (props) => {
     </View>
   );
 		}
-		if (!editor  && videoCall.enabled) {
+		if (!editor  && videoCall.enabled && url) {
 			return (
 					<View style={styles.wrapper}>
 						<View style={{width: "100%", height: "100%"}}>

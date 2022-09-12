@@ -1,34 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import DailyIframe from "@daily-co/daily-js";
 import videoImage from "./editor-image.png";
 
 const DailyVideoChat = (props) => {
-  const elementRef = useRef();
-  
-  //function for joining a call
-  function JoinCall() {
-    useEffect(() => {
-      const parentElement = elementRef.current;
-      const callFrame = DailyIframe.createFrame(parentElement, {});
-      if (token && videoCall.enabled) {
-        callFrame.join({
-          url: url,
-          token: token,
-          showLeaveButton: true,
-          activeSpeakerMode: false,
-        });
-      }
-      if (!token && videoCall.enabled) {
-        callFrame.join({
-          url: url,
-          showLeaveButton: true,
-          activeSpeakerMode: false,
-        });
-      }
-    }, []);
-  };
-
+  //props and constants
+  const ref = useRef(null); 
   const {
     apikey,
     editor,
@@ -40,10 +17,7 @@ const DailyVideoChat = (props) => {
   } = props;
 
   //videocallprops
-  const {
-    token,
-    url,
-  } = videoCall;
+  const { token, url, enabled } = videoCall;
 
   //createRoomButton props
   const {
@@ -105,6 +79,52 @@ const DailyVideoChat = (props) => {
     updateRounding,
     roomUpdated,
   } = updateRoomSettingsButton;
+
+  //when the coment renders, determines when it's in view. This stops from rejoining calls when on another page
+  function notInView(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    ); 
+  }
+  
+  //function for joining a call
+  function JoinCall() {
+    useEffect(() => {
+      const element = document.querySelector(".daily-element");
+      const hidden = notInView(element)
+      console.log (hidden, "this ran")
+      const parentElement = ref.current;
+      const callFrame = DailyIframe.createFrame(parentElement, {});
+
+      // if (!localStorage.getItem("leftMeeting")) {
+        if (token && enabled && url && !hidden) {
+          callFrame.join({
+            url: url,
+            token: token,
+            showLeaveButton: true,
+            activeSpeakerMode: false,
+          });
+        }
+        if (!token && enabled && url && !hidden) {
+          callFrame.join({
+            url: url,
+            showLeaveButton: true,
+            activeSpeakerMode: false,
+          });
+        }
+      // }
+      callFrame.on("left-meeting", () => {
+        localStorage.setItem("leftMeeting", true);
+        callFrame.destroy();
+      });
+    }, []);
+  }
+
+  
 
   //Converting time to js
 
@@ -261,7 +281,6 @@ const DailyVideoChat = (props) => {
         const deletedResult = result.deleted;
 
         if (room_deleted) room_deleted(deletedResult);
-
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -314,6 +333,7 @@ const DailyVideoChat = (props) => {
 
   //error handling
   const errorHandling = getError();
+
 
   function getError(e) {
     if (!apikey && createRoomButton.enabled && !editor)
@@ -395,23 +415,23 @@ const DailyVideoChat = (props) => {
     return (
       <View style={{ width: "100%", height: "100%" }}>
         <div
-          ref={elementRef}
+          className="daily-element"
+          ref={ref}
           style={{
             display: videoCall.enabled ? "block" : "none",
             width: "100%",
             height: "100%",
             padding: 0,
-          }}>
+          }}
+        >
           {JoinCall()}
         </div>
-        <div style={{ display: createRoomButton.enabled ? "block" : "none" }} >
+        <div style={{ display: createRoomButton.enabled ? "block" : "none" }}>
           <TouchableOpacity
             style={createButtonStyle}
             onPress={createRoomAction}
           >
-            <Text style={createRoomButton.styles.createText}>
-            {createText}
-            </Text>
+            <Text style={createRoomButton.styles.createText}>{createText}</Text>
           </TouchableOpacity>
         </div>
         <div style={{ display: deleteRoomButton.enabled ? "block" : "none" }}>
@@ -449,7 +469,7 @@ const DailyVideoChat = (props) => {
               {tokenText}
             </Text>
           </TouchableOpacity>
-        </div>
+        </div> 
       </View>
     );
   }
@@ -471,7 +491,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 14,
     fontWeight: "600",
-  }
+  },
 });
 
 export default DailyVideoChat;
