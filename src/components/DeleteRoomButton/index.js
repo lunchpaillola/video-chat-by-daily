@@ -5,18 +5,15 @@ const DeleteRoomButton = (props) => {
   const {
     apikey,
     editor,
-    deleteRoomButton,
-  } = props;
-
-  //deleteRoomButton props
-  const {
     room_name_d,
     deleteText,
     deleteBackgroundColor,
     deleteBorderColor,
     deleteRounding,
     room_deleted,
-  } = deleteRoomButton;
+    styles,
+  } = props;
+
 
   //ButtonStyles
 
@@ -73,8 +70,8 @@ const DeleteRoomButton = (props) => {
 
   if (errorHandling && !editor) {
     return (
-      <View style={styles.statusWrapper}>
-        <Text style={styles.statusText}>{errorHandling}</Text>
+      <View style={componentStyles.statusWrapper}>
+        <Text style={componentStyles.statusText}>{errorHandling}</Text>
       </View>
     );
   }
@@ -82,9 +79,9 @@ const DeleteRoomButton = (props) => {
 
   if (editor) {
   return (
-    <View style={styles.wrapper}>
+    <View style={componentStyles.wrapper}>
       <TouchableOpacity style={deleteButtonStyle}>
-        <Text style={deleteRoomButton.styles.deleteText}>{deleteText}</Text>
+        <Text style={styles.deleteText}>{deleteText}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -93,14 +90,14 @@ const DeleteRoomButton = (props) => {
 			return (
 					
         <TouchableOpacity style={deleteButtonStyle} onPress={deleteRoomAction}>
-        <Text style={deleteRoomButton.styles.deleteText}>{deleteText}</Text>
+        <Text style={styles.deleteText}>{deleteText}</Text>
     </TouchableOpacity>
 			);
 		}
 };
 
 
-const styles = StyleSheet.create({
+const componentStyles = StyleSheet.create({
   wrapper: {
     display: "flex",
     alignItems: "center",

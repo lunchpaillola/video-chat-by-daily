@@ -8,34 +8,15 @@
   "icon": "./video-thumbnail.png",
   "props": [
     {
-      "name": "apikey",
-      "displayName": "Your Daily API key",
-      "type": "text",
-      "helpText": "Sign up at daily.co for the api key"
-    }
-  ],
-  "childComponents": [
+      "name": "url",
+      "displayName": "Room url",
+      "type": "text"
+    },
     {
-      "name": "videoCall",
-      "displayName": "Video Call",
-      "props": [
-        {
-          "name": "enabled",
-          "type": "boolean",
-          "default": true
-        },
-        {
-          "name": "url",
-          "displayName": "Room url",
-          "type": "text"
-        },
-        {
-          "name": "token",
-          "displayName": "Meeting token",
-          "type": "text",
-          "helpText": "Optional. Meeting Tokens configure the video session on a per-user basis."
-        }
-      ]
+      "name": "token",
+      "displayName": "Meeting token",
+      "type": "text",
+      "helpText": "Optional. Meeting Tokens configure the video session on a per-user basis."
     }
-  ]
-  }
+    ]
+ }

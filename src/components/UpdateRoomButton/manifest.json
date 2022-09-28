@@ -1,192 +1,180 @@
 {
   "displayName": "Update Room Button",
-  "defaultWidth": 550,
+  "defaultWidth": 400,
   "defaultHeight": 36,
   "components": "./index.js",
   "resizeY": true,
   "resizeX": true,
-  "icon": "./thumbnail.png",
+  "icon": "./updateroombutton.png",
   "props": [
     {
       "name": "apikey",
       "displayName": "Your Daily API key",
       "type": "text",
       "helpText": "Sign up at daily.co for the api key"
-    }
-  ],
-  "childComponents": [
+    },
     {
-      "name": "updateRoomSettingsButton",
-      "displayName": "Update Room Button",
-      "props": [{
-        "name": "enabled",
-        "type": "boolean",
-        "default": false
-        },
-        {
-        "name": "room_name_u",
-				 "displayName": "Room Name",
-        "type": "text"
-        },
-        {
-        "name": "privacy_u",
-				 "displayName": "Privacy",
-        "type": "text",
-        "default": "public",
-        "control": {
-          "type": "menu",
-          "options": [
-            { "label": "public", "value": "public" },
-            { "label": "private", "value": "private" }
-          ]
-        }
-      },
-        {
-          "name": "nbf_u",
-           "displayName": "Time when the room will be available",
-          "type": "date",
-           "helpText": "If not set, users will be able to join a room as soon as it is created."
-        },
-        {
-          "name": "exp_u",
-           "displayName": "Time when the room will expire",
-          "type": "date",
-           "helpText": "If not set, users will be able to join this room until deleted."
-        },
-        {
-        "name": "enable_chat_u",
-				 "displayName": "Enable Chat",
-        "type": "boolean",
-        "default": true
-        },
-        {
-        "name": "owner_only_broadcast_u",
-				 "displayName": "Owner Only Broadcast",
-        "type": "boolean",
-        "default": false,
-				 "helpText": "If enabled, only users with meeting owner tokens are allowed to turn on camera, unmute mic, and share screen."
-        },
-        {
-        "name": "enable_knocking_u",
-				 "displayName": "Enable Knocking",
-        "type": "boolean",
-        "default": true,
-				 "helpText": "For private rooms. Participants without corresponding meeting tokens can request admission from a meeting owner. "
-        },
-        {
-        "name": "start_video_off_u",
-				 "displayName": "Start Video Off",
-        "type": "boolean",
-        "default": false
-        },
-        {
-        "name": "start_audio_off_u",
-				 "displayName": "Start Audio Off",
-        "type": "boolean",
-        "default": false
-        },
-        {
-          "name": "updateRoomStyle",
-          "displayName": "Show button styles",
-          "type": "boolean",
-          "default": false
+      "name": "room_name_u",
+       "displayName": "Room Name",
+      "type": "text"
       },
       {
-        "name": "updateText",
-        "displayName": "Button text",
-        "type": "text",
-        "default": "UPDATE ROOM",
-        "enabled": {
-          "updateRoomStyle": true
-        },
-        "styles": {
-          "fontFamily": "@body",
-          "fontWeight": 600,
-          "color": "@contrast:updateBackgroundColor"
-        }
-      },
-     {
-        "name": "updateBackgroundColor",
-        "displayName": "Button color",
-        "type": "color",
-        "default": "@primary",
-        "enabled": {
-          "updateRoomStyle": true
-        }
-        
-      },
-      {
-        "name": "updateBorderColor",
-        "displayName": "Border Color",
-        "type": "color",
-        "default": "@primary",
-        "enabled": {
-          "updateRoomStyle": true
-        }
-      },
-      {
-        "name": "updateRounding",
-        "displayName": "Button rounding",
-        "type": "number",
-        "default": 4,
-        "enabled": {
-          "updateRoomStyle": true
-        },
-        "control": { "type": "slider", "max": 20, "min": 0 }
-      },
-        {
-        "name": "roomUpdated",
-        "displayName": "Additional actions after a room is updated.",
-        "type": "action",
-       "arguments": [
-        {
-          "type": "text",
-            "name": "name",
-          "displayName": "name"
-        },
-        {
-          "type": "text",
-            "name": "roomUrl",
-          "displayName": "room url"
-        },
-          {
-          "type": "text",
-            "name": "id",
-          "displayName": "id"
-        },
-        {
-          "type": "text",
-            "name": "privacy",
-          "displayName": "privacy"
-        },
-          {
-          "type": "boolean",
-           "name": "enable_chat",
-          "displayName": "enabled chat"
-        },
-        {
-          "type": "boolean",
-           "name": "owner_only_broadcast",
-          "displayName": "owner only broadcast"
-        },
-          {
-          "type": "boolean",
-           "name": "start_video_off",
-          "displayName": "Start Video Off"
-        },
-        {
-          "type": "boolean",
-           "name": "start_audio_off",
-          "displayName": "Start Audio Off"
-        },
-        {
-          "type": "boolean",
-           "name": "enable_knocking",
-          "displayName": "Enabled Knocking"
-        }
-       ]
+      "name": "privacy_u",
+       "displayName": "Privacy",
+      "type": "text",
+      "default": "public",
+      "control": {
+        "type": "menu",
+        "options": [
+          { "label": "public", "value": "public" },
+          { "label": "private", "value": "private" }
+        ]
       }
-    ]
-  }
+    },
+      {
+        "name": "nbf_u",
+         "displayName": "Time when the room will be available",
+        "type": "date",
+         "helpText": "If not set, users will be able to join a room as soon as it is created."
+      },
+      {
+        "name": "exp_u",
+         "displayName": "Time when the room will expire",
+        "type": "date",
+         "helpText": "If not set, users will be able to join this room until deleted."
+      },
+      {
+      "name": "enable_chat_u",
+       "displayName": "Enable Chat",
+      "type": "boolean",
+      "default": true
+      },
+      {
+      "name": "owner_only_broadcast_u",
+       "displayName": "Owner Only Broadcast",
+      "type": "boolean",
+      "default": false,
+       "helpText": "If enabled, only users with meeting owner tokens are allowed to turn on camera, unmute mic, and share screen."
+      },
+      {
+      "name": "enable_knocking_u",
+       "displayName": "Enable Knocking",
+      "type": "boolean",
+      "default": true,
+       "helpText": "For private rooms. Participants without corresponding meeting tokens can request admission from a meeting owner. "
+      },
+      {
+      "name": "start_video_off_u",
+       "displayName": "Start Video Off",
+      "type": "boolean",
+      "default": false
+      },
+      {
+      "name": "start_audio_off_u",
+       "displayName": "Start Audio Off",
+      "type": "boolean",
+      "default": false
+      },
+      {
+        "name": "updateRoomStyle",
+        "displayName": "Show button styles",
+        "type": "boolean",
+        "default": false
+    },
+    {
+      "name": "updateText",
+      "displayName": "Button text",
+      "type": "text",
+      "default": "UPDATE ROOM",
+      "enabled": {
+        "updateRoomStyle": true
+      },
+      "styles": {
+        "fontFamily": "@body",
+        "fontWeight": 600,
+        "color": "@contrast:updateBackgroundColor"
+      }
+    },
+   {
+      "name": "updateBackgroundColor",
+      "displayName": "Button color",
+      "type": "color",
+      "default": "@primary",
+      "enabled": {
+        "updateRoomStyle": true
+      }
+      
+    },
+    {
+      "name": "updateBorderColor",
+      "displayName": "Border Color",
+      "type": "color",
+      "default": "@primary",
+      "enabled": {
+        "updateRoomStyle": true
+      }
+    },
+    {
+      "name": "updateRounding",
+      "displayName": "Button rounding",
+      "type": "number",
+      "default": 4,
+      "enabled": {
+        "updateRoomStyle": true
+      },
+      "control": { "type": "slider", "max": 20, "min": 0 }
+    },
+      {
+      "name": "roomUpdated",
+      "displayName": "Additional actions after a room is updated.",
+      "type": "action",
+     "arguments": [
+      {
+        "type": "text",
+          "name": "name",
+        "displayName": "name"
+      },
+      {
+        "type": "text",
+          "name": "roomUrl",
+        "displayName": "room url"
+      },
+        {
+        "type": "text",
+          "name": "id",
+        "displayName": "id"
+      },
+      {
+        "type": "text",
+          "name": "privacy",
+        "displayName": "privacy"
+      },
+        {
+        "type": "boolean",
+         "name": "enable_chat",
+        "displayName": "enabled chat"
+      },
+      {
+        "type": "boolean",
+         "name": "owner_only_broadcast",
+        "displayName": "owner only broadcast"
+      },
+        {
+        "type": "boolean",
+         "name": "start_video_off",
+        "displayName": "Start Video Off"
+      },
+      {
+        "type": "boolean",
+         "name": "start_audio_off",
+        "displayName": "Start Audio Off"
+      },
+      {
+        "type": "boolean",
+         "name": "enable_knocking",
+        "displayName": "Enabled Knocking"
+      }
+     ]
+    }
   ]
 }

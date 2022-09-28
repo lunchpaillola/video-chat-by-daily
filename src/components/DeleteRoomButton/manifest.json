@@ -1,87 +1,82 @@
 {
   "displayName": "Delete Room Button",
-  "defaultWidth": 550,
+  "defaultWidth": 400,
   "defaultHeight": 36,
   "components": "./index.js",
   "resizeY": true,
   "resizeX": true,
-  "icon": "./thumbnail.png",
+  "icon": "./deleteroombutton.png",
   "props": [
     {
       "name": "apikey",
       "displayName": "Your Daily API key",
       "type": "text",
       "helpText": "Sign up at daily.co for the api key"
-    }
-  ],
-  "childComponents": [
-    {
-      "name": "deleteRoomButton",
-      "props": 
-      [{
-        "name": "room_name_d",
-				 "displayName": "Room Name",
-        "type": "text"
-      },
-      {
-        "name": "editDeleteButton",
-        "displayName": "Show button styles",
-        "type": "boolean",
-        "default": false
     },
-      {
-        "name": "deleteText",
-        "displayName": "Button text",
-        "type": "text",
-        "default": "DELETE ROOM",
-        "enabled": {
-          "editDeleteButton": true
-        },
-       "styles": {
-          "fontFamily": "@body",
-          "fontWeight": 600,
-          "color": "@contrast:deleteBackgroundColor"
-        }
+    {
+      "name": "room_name_d",
+       "displayName": "Room Name",
+      "type": "text"
+    },
+    {
+      "name": "editDeleteButton",
+      "displayName": "Show button styles",
+      "type": "boolean",
+      "default": false
+  },
+    {
+      "name": "deleteText",
+      "displayName": "Button text",
+      "type": "text",
+      "default": "DELETE ROOM",
+      "enabled": {
+        "editDeleteButton": true
       },
-     {
-        "name": "deleteBackgroundColor",
-        "displayName": "Button color",
-        "type": "color",
-        "enabled": {
-          "editDeleteButton": true
-        },
-        "default": "@primary"
-      },
-      {
-        "name": "deleteBorderColor",
-        "displayName": "Border Color",
-        "type": "color",
-        "enabled": {
-          "editDeleteButton": true
-        },
-        "default": "@primary"
-      },
-      {
-        "name": "deleteRounding",
-        "displayName": "Button rounding",
-        "type": "number",
-        "default": 4,
-        "enabled": {
-          "editDeleteButton": true
-        },
-        "control": { "type": "slider", "max": 20, "min": 0 }
-      },
-      {
-        "name": "room_deleted",
-        "displayName": "Additional actions after a room is deleted.",
-        "type": "action",
-        "arguments": [
-          {
-            "type": "boolean",
-            "name": "deletedResult",
-            "displayName": "name"   
-          }
-        ]
+     "styles": {
+        "fontFamily": "@body",
+        "fontWeight": 600,
+        "color": "@contrast:deleteBackgroundColor"
       }
+    },
+   {
+      "name": "deleteBackgroundColor",
+      "displayName": "Button color",
+      "type": "color",
+      "enabled": {
+        "editDeleteButton": true
+      },
+      "default": "@primary"
+    },
+    {
+      "name": "deleteBorderColor",
+      "displayName": "Border Color",
+      "type": "color",
+      "enabled": {
+        "editDeleteButton": true
+      },
+      "default": "@primary"
+    },
+    {
+      "name": "deleteRounding",
+      "displayName": "Button rounding",
+      "type": "number",
+      "default": 4,
+      "enabled": {
+        "editDeleteButton": true
+      },
+      "control": { "type": "slider", "max": 20, "min": 0 }
+    },
+    {
+      "name": "room_deleted",
+      "displayName": "Additional actions after a room is deleted.",
+      "type": "action",
+      "arguments": [
+        {
+          "type": "boolean",
+          "name": "deletedResult",
+          "displayName": "name"   
+        }
       ]
-    }]}
+    }
+  ]
+}

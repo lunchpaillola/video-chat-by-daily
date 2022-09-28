@@ -6,14 +6,9 @@ import {checkMultiple, requestMultiple, PERMISSIONS} from 'react-native-permissi
 const DailyVideoChat = (props) => {
   const {
     editor,
-    videoCall,
-  } = props;
-
-  //videocallprops
-  const {
     token,
     url,
-  } = videoCall;
+  } = props;
 
   const imageStyle = {
     width: "100%",
@@ -130,8 +125,8 @@ const DailyVideoChat = (props) => {
 
   if (errorHandling && !editor) {
     return (
-      <View style={styles.statusWrapper}>
-        <Text style={styles.statusText}>{errorHandling}</Text>
+      <View style={componentStyles.statusWrapper}>
+        <Text style={componentStyles.statusText}>{errorHandling}</Text>
       </View>
     );
   }
@@ -139,14 +134,14 @@ const DailyVideoChat = (props) => {
 
   if (editor) {
   return (
-    <View style={styles.wrapper}>
+    <View style={componentStyles.wrapper}>
       <Image style={imageStyle} source={videoImage} />
     </View>
   );
 		}
 		if (!editor && url) {
 			return (
-					<View style={styles.wrapper}>
+					<View style={componentStyles.wrapper}>
 						<View style={{width: "100%", height: "100%"}}>
 						<WebView
           source={{uri: videoCallURL}}
@@ -169,7 +164,7 @@ const DailyVideoChat = (props) => {
 };
 
 
-const styles = StyleSheet.create({
+const componentStyles = StyleSheet.create({
   wrapper: {
     display: "flex",
     alignItems: "center",

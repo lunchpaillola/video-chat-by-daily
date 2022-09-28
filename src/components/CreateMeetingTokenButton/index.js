@@ -5,13 +5,6 @@ const CreateMeetingTokenButton = (props) => {
   const {
     apikey,
     editor,
-    createMeetingTokenButton,
-  } = props;
-
-
-  //createMeetingTokenButton props
-
-  const {
     room_name,
     username,
     is_owner,
@@ -22,7 +15,8 @@ const CreateMeetingTokenButton = (props) => {
     tokenBorderColor,
     tokenRounding,
     meeting_token_created,
-  } = createMeetingTokenButton;
+    styles,
+  } = props;
 
   //ButtonStyles
 
@@ -92,8 +86,8 @@ const CreateMeetingTokenButton = (props) => {
 
   if (errorHandling && !editor) {
     return (
-      <View style={styles.statusWrapper}>
-        <Text style={styles.statusText}>{errorHandling}</Text>
+      <View style={componentStyles.statusWrapper}>
+        <Text style={componentStyles.statusText}>{errorHandling}</Text>
       </View>
     );
   }
@@ -101,9 +95,9 @@ const CreateMeetingTokenButton = (props) => {
 
   if (editor) {
   return (
-    <View style={styles.wrapper}>
+    <View style={componentStyles.wrapper}>
 						<TouchableOpacity style={meetingTokenStyle}>
-							<Text style={createMeetingTokenButton.styles.tokenText}>{tokenText}</Text></TouchableOpacity>
+							<Text style={styles.tokenText}>{tokenText}</Text></TouchableOpacity>
     </View>
   );
 		}
@@ -111,13 +105,13 @@ const CreateMeetingTokenButton = (props) => {
     if (!editor) {
 			return (
         <TouchableOpacity style={meetingTokenStyle} onPress={meetingTokenAction}>
-								<Text style={createMeetingTokenButton.styles.tokenText}>{tokenText}</Text></TouchableOpacity>
+								<Text style={styles.tokenText}>{tokenText}</Text></TouchableOpacity>
 			);
 		}
 };
 
 
-const styles = StyleSheet.create({
+const componentStyles = StyleSheet.create({
   wrapper: {
     display: "flex",
     alignItems: "center",

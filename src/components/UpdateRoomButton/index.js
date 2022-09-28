@@ -1,13 +1,8 @@
-import { Image, Text, View, StyleSheet, TouchableOpacity, Alert} from "react-native";
+import {Text, View, StyleSheet, TouchableOpacity} from "react-native";
 const EditRoomButton = (props) => {
   const {
     apikey,
     editor,
-    updateRoomSettingsButton,
-  } = props;
-
-  //updateRoomSettingsButton props
-  const {
     room_name_u,
     privacy_u,
     enable_chat_u,
@@ -22,7 +17,8 @@ const EditRoomButton = (props) => {
     updateBorderColor,
     updateRounding,
     roomUpdated,
-  } = updateRoomSettingsButton;
+    styles,
+  } = props;
 
   //Converting time to js
   const updateRoomExp = Math.round(new Date(exp_u).getTime() / 1000);
@@ -106,8 +102,8 @@ const EditRoomButton = (props) => {
 
   if (errorHandling && !editor) {
     return (
-      <View style={styles.statusWrapper}>
-        <Text style={styles.statusText}>{errorHandling}</Text>
+      <View style={componentStyles.statusWrapper}>
+        <Text style={componentStyles.statusText}>{errorHandling}</Text>
       </View>
     );
   }
@@ -115,9 +111,9 @@ const EditRoomButton = (props) => {
 
   if (editor) {
   return (
-    <View style={styles.wrapper}>
+    <View style={componentStyles.wrapper}>
       <TouchableOpacity style={updateButtonStyle}>
-        <Text style={updateRoomSettingsButton.styles.updateText}>{updateText}</Text>
+        <Text style={styles.updateText}>{updateText}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -126,7 +122,7 @@ const EditRoomButton = (props) => {
     if (!editor) {
 			return (
         <TouchableOpacity style={updateButtonStyle} onPress={updateRoomAction}>
-        <Text style={updateRoomSettingsButton.styles.updateText}>{updateText}</Text>
+        <Text style={styles.updateText}>{updateText}</Text>
         </TouchableOpacity>
 			);
 		}
@@ -134,7 +130,7 @@ const EditRoomButton = (props) => {
 };
 
 
-const styles = StyleSheet.create({
+const componentStyles = StyleSheet.create({
   wrapper: {
     display: "flex",
     alignItems: "center",

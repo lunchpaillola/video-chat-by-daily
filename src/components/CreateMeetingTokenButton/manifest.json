@@ -1,28 +1,18 @@
 {
   "displayName": "Create Meeting Token Button",
-  "defaultWidth": 550,
+  "defaultWidth": 400,
   "defaultHeight": 36,
   "components": "./index.js",
   "resizeY": true,
   "resizeX": true,
-  "icon": "./thumbnail.png",
+  "icon": "./creatingmeetingtokenbutton.png",
   "props": [
     {
       "name": "apikey",
       "displayName": "Your Daily API key",
       "type": "text",
       "helpText": "Sign up at daily.co for the api key"
-    }
-  ],
-  "childComponents": [
-    {
-      "name": "createMeetingTokenButton",
-      "displayName": "Create Meeting Token",
-      "props": [{
-        "name": "enabled",
-        "type": "boolean",
-        "default": false
-      },
+    },
       {
         "name": "room_name",
 				 "displayName": "Room Name",
@@ -111,6 +101,5 @@
           }
         ]
       }
-    ]
+  ]
   }
-]}

@@ -27,13 +27,14 @@ const DailyVideoChat = (props) => {
       }
     }, []);
   };
+
+  //props
   const {
     editor,
-    videoCall,
+    token,
+    url,
   } = props;
 
-  //videocallprops
-  const { token, url } = videoCall;
 
   
 
@@ -49,8 +50,8 @@ const DailyVideoChat = (props) => {
 
   if (errorHandling && !editor) {
     return (
-      <View style={styles.statusWrapper}>
-        <Text style={styles.statusText}> {errorHandling}</Text>
+      <View style={componentStyles.statusWrapper}>
+        <Text style={componentStyles.statusText}> {errorHandling}</Text>
       </View>
     );
   }
@@ -92,7 +93,7 @@ const DailyVideoChat = (props) => {
   }
 };
 
-const styles = StyleSheet.create({
+const componentStyles = StyleSheet.create({
   wrapper: {
     display: "flex",
     alignItems: "center",

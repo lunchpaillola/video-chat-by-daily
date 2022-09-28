@@ -4,11 +4,6 @@ const CreateRoomButton = (props) => {
   const {
     apikey,
     editor,
-    createRoomButton,
-  } = props;
-
-  //createRoomButton props
-  const {
     privacy,
     enable_prejoin_ui,
     enable_chat,
@@ -23,7 +18,8 @@ const CreateRoomButton = (props) => {
     createBorderColor,
     createRounding,
     roomCreated,
-  } = createRoomButton;
+    styles,
+  } = props;
 
   //Converting time to js
 
@@ -105,8 +101,8 @@ const CreateRoomButton = (props) => {
 
   if (errorHandling && !editor) {
     return (
-      <View style={styles.statusWrapper}>
-        <Text style={styles.statusText}>{errorHandling}</Text>
+      <View style={componentStyles.statusWrapper}>
+        <Text style={componentStyles.statusText}>{errorHandling}</Text>
       </View>
     );
   }
@@ -114,9 +110,9 @@ const CreateRoomButton = (props) => {
 
   if (editor) {
   return (
-    <View style={styles.wrapper}>
+    <View style={componentStyles.wrapper}>
       <TouchableOpacity style={createButtonStyle}>
-        <Text style={createRoomButton.styles.createText}>{createText}</Text>
+        <Text style={styles.createText}>{createText}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -125,14 +121,14 @@ const CreateRoomButton = (props) => {
 			return (
 					
 							<TouchableOpacity style={createButtonStyle} onPress={createRoomAction}>
-									<Text style={createRoomButton.styles.createText}>{createText}</Text>
+									<Text style={styles.createText}>{createText}</Text>
 							</TouchableOpacity>
 			);
 		}
 };
 
 
-const styles = StyleSheet.create({
+const componentStyles = StyleSheet.create({
   wrapper: {
     display: "flex",
     alignItems: "center",
