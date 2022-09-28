@@ -10,6 +10,22 @@
     {
       "name": "VideoChatByDaily",
       "manifest": "./src/components/VideoChatByDaily/manifest.json"
+    },
+    {
+      "name": "CreateMeetingTokenButton",
+      "manifest": "./src/components/CreateMeetingTokenButton/manifest.json"
+    },
+    {
+      "name": "CreateRoomButton",
+      "manifest": "./src/components/CreateRoomButton/manifest.json"
+    },
+    {
+      "name": "DeleteRoomButton",
+      "manifest": "./src/components/DeleteRoomButton/manifest.json"
+    },
+    {
+      "name": "UpdateRoomButton",
+      "manifest": "./src/components/UpdateRoomButton/manifest.json"
     }
   ],
   "iosInstallScript": "./scripts/install_ios.sh",
