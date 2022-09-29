@@ -9,23 +9,23 @@
   "components": [
     {
       "name": "VideoChatByDaily",
-      "manifest": "./src/components/VideoChatByDaily/manifest.json"
+      "manifest": "./src/VideoChatByDaily/manifest.json"
     },
     {
       "name": "CreateMeetingTokenButton",
-      "manifest": "./src/components/CreateMeetingTokenButton/manifest.json"
+      "manifest": "./src/CreateMeetingTokenButton/tokenmanifest.json"
     },
     {
       "name": "CreateRoomButton",
-      "manifest": "./src/components/CreateRoomButton/manifest.json"
+      "manifest": "./src/CreateRoomButton/createmanifest.json"
     },
     {
       "name": "DeleteRoomButton",
-      "manifest": "./src/components/DeleteRoomButton/manifest.json"
+      "manifest": "./src/DeleteRoomButton/deletemanifest.json"
     },
     {
       "name": "UpdateRoomButton",
-      "manifest": "./src/components/UpdateRoomButton/manifest.json"
+      "manifest": "./src/UpdateRoomButton/updatemanifest.json"
     }
   ],
   "iosInstallScript": "./scripts/install_ios.sh",

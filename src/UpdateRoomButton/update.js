@@ -1,42 +1,41 @@
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-
-const CreateRoomButton = (props) => {
+const UpdateRoomButton = (props) => {
   const {
     apikey,
     editor,
-    privacy,
-    enable_prejoin_ui,
-    enable_chat,
-    owner_only_broadcast,
-    exp,
-    nbf,
-    enable_knocking,
-    start_video_off,
-    start_audio_off,
-    createText,
-    createBackgroundColor,
-    createBorderColor,
-    createRounding,
-    roomCreated,
+    room_name_u,
+    privacy_u,
+    enable_chat_u,
+    owner_only_broadcast_u,
+    exp_u,
+    nbf_u,
+    enable_knocking_u,
+    start_video_off_u,
+    start_audio_off_u,
+    updateText,
+    updateBackgroundColor,
+    updateBorderColor,
+    updateRounding,
+    roomUpdated,
     styles,
   } = props;
 
   //Converting time to js
-
-  const createRoomExp = Math.round(new Date(exp).getTime() / 1000);
-  const createRoomNbf = Math.round(new Date(nbf).getTime() / 1000);
+  const updateRoomExp = Math.round(new Date(exp_u).getTime() / 1000);
+  const updateRoomNbf = Math.round(new Date(nbf_u).getTime() / 1000);
 
   //ButtonStyles
-  const createButtonStyle = {
+
+  const updateButtonStyle = {
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
     height: 36,
     marginTop: 0,
     padding: 4,
-    borderRadius: createRounding,
-    backgroundColor: createBackgroundColor,
-    borderColor: createBorderColor,
+    borderRadius: updateRounding,
+    backgroundColor: updateBackgroundColor,
+    borderColor: updateBorderColor,
     borderWidth: 2,
     display: "flex",
   };
@@ -45,9 +44,10 @@ const CreateRoomButton = (props) => {
 
   const endpointurl = "https://api.daily.co/v1/";
 
-  //action for creating a room
-  const createRoomAction = () => {
-    fetch(endpointurl + "rooms/", {
+  //action for updating a room
+  const updateRoomAction = () => {
+    if(!editor){
+    fetch(endpointurl + "rooms/" + room_name_u, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -58,17 +58,17 @@ const CreateRoomButton = (props) => {
         properties: {
           enable_network_ui: false,
           enable_new_call_ui: true,
-          enable_prejoin_ui: enable_prejoin_ui,
-          exp: createRoomExp,
-          nbf: createRoomNbf,
+          enable_prejoin_ui: true,
           enable_screenshare: false,
-          enable_chat: enable_chat,
-          owner_only_broadcast: owner_only_broadcast,
-          enable_knocking: enable_knocking,
-          start_video_off: start_video_off,
-          start_audio_off: start_audio_off,
+          enable_chat: enable_chat_u,
+          owner_only_broadcast: owner_only_broadcast_u,
+          exp: updateRoomExp,
+          nbf: updateRoomNbf,
+          enable_knocking: enable_knocking_u,
+          start_video_off: start_video_off_u,
+          start_audio_off: start_audio_off_u,
         },
-        privacy: privacy,
+        privacy: privacy_u,
       }),
     })
       .then((response) => response.json())
@@ -80,20 +80,23 @@ const CreateRoomButton = (props) => {
         const id = result.id;
         const privacy = result.privacy;
 
-        if (roomCreated) roomCreated(name, roomUrl, id, privacy);
+        if (roomUpdated) roomUpdated(name, roomUrl, id, privacy);
       })
       .catch((error) => {
         console.error("Error:", error);
         getError(error);
       });
-  };
+  }};
 
   //error handling
   const errorHandling = getError();
 
   function getError(e) {
     if (!apikey)
-      return 'API Key is not set in the "Create Room Button" component';
+      return 'API Key is not set in the "Update Room Button" component';
+    if (!room_name_u)
+      return 'Room name is not set in the "Update Room Button" component';
+    if (e) return e;
   }
 
   if (errorHandling && !editor) {
@@ -103,21 +106,11 @@ const CreateRoomButton = (props) => {
       </View>
     );
   }
-
-  if (editor) {
     return (
-      <TouchableOpacity style={createButtonStyle}>
-        <Text style={styles.createText}>{createText}</Text>
+      <TouchableOpacity style={updateButtonStyle} onPress={updateRoomAction}>
+        <Text style={styles.updateText}>{updateText}</Text>
       </TouchableOpacity>
     );
-  }
-  if (!editor) {
-    return (
-      <TouchableOpacity style={createButtonStyle} onPress={createRoomAction}>
-        <Text style={styles.createText}>{createText}</Text>
-      </TouchableOpacity>
-    );
-  }
 };
 
 const componentStyles = StyleSheet.create({
@@ -139,4 +132,4 @@ const componentStyles = StyleSheet.create({
   },
 });
 
-export default CreateRoomButton;
+export default UpdateRoomButton;

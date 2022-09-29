@@ -18,5 +18,5 @@
       "type": "text",
       "helpText": "Optional. Meeting Tokens configure the video session on a per-user basis."
     }
-    ]
- }
+  ]
+}

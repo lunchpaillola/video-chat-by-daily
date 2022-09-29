@@ -4,9 +4,11 @@ import DailyIframe from "@daily-co/daily-js";
 import videoImage from "./editor-image.png";
 
 const DailyVideoChat = (props) => {
-  const ref = useRef(null); 
-   //function for joining a call
-   function JoinCall() {
+  //props
+  const { editor, token, url } = props;
+  const ref = useRef(null);
+  //function for joining a call
+  function JoinCall() {
     useEffect(() => {
       const parentElement = ref.current;
       const callFrame = DailyIframe.createFrame(parentElement, {});
@@ -26,25 +28,13 @@ const DailyVideoChat = (props) => {
         });
       }
     }, []);
-  };
-
-  //props
-  const {
-    editor,
-    token,
-    url,
-  } = props;
-
-
-  
+  }
 
   //error handling
   const errorHandling = getError();
 
-
   function getError(e) {
-    if (!url)
-      return 'Room url is not set in the "Video Chat" component';
+    if (!url) return 'Room url is not set in the "Video Chat" component';
     if (e) return e;
   }
 
@@ -80,7 +70,7 @@ const DailyVideoChat = (props) => {
         <div
           ref={ref}
           style={{
-            display:"block",
+            display: "block",
             width: "100%",
             height: "100%",
             padding: 0,
@@ -112,4 +102,4 @@ const componentStyles = StyleSheet.create({
   },
 });
 
-export default DailyVideoChat;
+export default DailyVideoChat

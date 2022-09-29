@@ -1,5 +1,4 @@
-import {Text, View, StyleSheet, TouchableOpacity } from "react-native";
-
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 
 const DeleteRoomButton = (props) => {
   const {
@@ -13,7 +12,6 @@ const DeleteRoomButton = (props) => {
     room_deleted,
     styles,
   } = props;
-
 
   //ButtonStyles
 
@@ -33,9 +31,9 @@ const DeleteRoomButton = (props) => {
 
   const endpointurl = "https://api.daily.co/v1/";
 
-
   //action for deleting a room
   const deleteRoomAction = () => {
+    if (!editor) {
     fetch(endpointurl + "rooms/" + room_name_d, {
       method: "DELETE",
       headers: {
@@ -55,7 +53,7 @@ const DeleteRoomButton = (props) => {
         console.error("Error:", error);
         getError(error);
       });
-  }
+  }};
 
   //error handling
   const errorHandling = getError();
@@ -63,7 +61,7 @@ const DeleteRoomButton = (props) => {
   function getError(e) {
     if (!apikey)
       return 'API Key is not set in the "Delete Room Button" component';
-	 if (!room_name_d)
+    if (!room_name_d)
       return 'Room name is not set in the "Delete Room Button" component';
     if (e) return e;
   }
@@ -75,24 +73,13 @@ const DeleteRoomButton = (props) => {
       </View>
     );
   }
-		
-
-  if (editor) {
-  return (
-      <TouchableOpacity style={deleteButtonStyle}>
+    return (
+      <TouchableOpacity style={deleteButtonStyle} onPress={deleteRoomAction}>
         <Text style={styles.deleteText}>{deleteText}</Text>
       </TouchableOpacity>
-  );
-		}
-    if (!editor) {
-			return (
-        <TouchableOpacity style={deleteButtonStyle} onPress={deleteRoomAction}>
-        <Text style={styles.deleteText}>{deleteText}</Text>
-    </TouchableOpacity>
-			);
-		}
+    );
+  
 };
-
 
 const componentStyles = StyleSheet.create({
   wrapper: {
@@ -100,17 +87,17 @@ const componentStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-	statusWrapper: {
-			backgroundColor: "#d30",
-			padding: 16,
-			borderRadius: 5,
-			marginBottom: 16,
-	},
-	statusText: {
-			color: "#fff",
-			fontSize: 14,
-			fontWeight: "600",
-	}
+  statusWrapper: {
+    backgroundColor: "#d30",
+    padding: 16,
+    borderRadius: 5,
+    marginBottom: 16,
+  },
+  statusText: {
+    color: "#fff",
+    fontSize: 14,
+    fontWeight: "600",
+  },
 });
 
 export default DeleteRoomButton;
