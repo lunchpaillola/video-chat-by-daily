@@ -1,3 +1,4 @@
+import React from "react";
 import { Image, Text, View, StyleSheet, Alert } from "react-native";
 import videoImage from "./editor-image.png";
 import { WebView } from "react-native-webview";

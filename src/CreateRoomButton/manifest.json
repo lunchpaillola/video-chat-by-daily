@@ -2,7 +2,7 @@
   "displayName": "Create Room Button",
   "defaultWidth": 400,
   "defaultHeight": 36,
-  "components": "./create.js",
+  "components": "./index.js",
   "resizeY": true,
   "resizeX": true,
   "icon": "./createroombutton.png",

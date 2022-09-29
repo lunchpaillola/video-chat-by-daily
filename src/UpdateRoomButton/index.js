@@ -1,3 +1,4 @@
+import React from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 const UpdateRoomButton = (props) => {
   const {
@@ -46,47 +47,49 @@ const UpdateRoomButton = (props) => {
 
   //action for updating a room
   const updateRoomAction = () => {
-    if(!editor){
-    fetch(endpointurl + "rooms/" + room_name_u, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        Authorization: "Bearer " + apikey,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        properties: {
-          enable_network_ui: false,
-          enable_new_call_ui: true,
-          enable_prejoin_ui: true,
-          enable_screenshare: false,
-          enable_chat: enable_chat_u,
-          owner_only_broadcast: owner_only_broadcast_u,
-          exp: updateRoomExp,
-          nbf: updateRoomNbf,
-          enable_knocking: enable_knocking_u,
-          start_video_off: start_video_off_u,
-          start_audio_off: start_audio_off_u,
+    if (!editor) {
+      fetch(endpointurl + "rooms/" + room_name_u, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          Authorization: "Bearer " + apikey,
+          "Content-Type": "application/json",
         },
-        privacy: privacy_u,
-      }),
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        console.log("Success:", result);
-        console.log("room name:", result.name);
-        const name = result.name;
-        const roomUrl = result.url;
-        const id = result.id;
-        const privacy = result.privacy;
-
-        if (roomUpdated) roomUpdated(name, roomUrl, id, privacy);
+        body: JSON.stringify({
+          properties: {
+            enable_network_ui: false,
+            enable_new_call_ui: true,
+            enable_prejoin_ui: true,
+            enable_screenshare: false,
+            enable_chat: enable_chat_u,
+            owner_only_broadcast: owner_only_broadcast_u,
+            exp: updateRoomExp,
+            nbf: updateRoomNbf,
+            enable_knocking: enable_knocking_u,
+            start_video_off: start_video_off_u,
+            start_audio_off: start_audio_off_u,
+          },
+          privacy: privacy_u,
+        }),
       })
-      .catch((error) => {
-        console.error("Error:", error);
-        getError(error);
-      });
-  }};
+        .then((response) => response.json())
+        .then((result) => {
+          console.log("Success:", result);
+          console.log("room name:", result.name);
+          const name = result.name;
+          const roomUrl = result.url;
+          const id = result.id;
+          const privacy = result.privacy;
+
+          if (roomUpdated) roomUpdated(name, roomUrl, id, privacy);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          getError(error);
+        });
+    }
+    return;
+  };
 
   //error handling
   const errorHandling = getError();
@@ -106,11 +109,11 @@ const UpdateRoomButton = (props) => {
       </View>
     );
   }
-    return (
-      <TouchableOpacity style={updateButtonStyle} onPress={updateRoomAction}>
-        <Text style={styles.updateText}>{updateText}</Text>
-      </TouchableOpacity>
-    );
+  return (
+    <TouchableOpacity style={updateButtonStyle} onPress={updateRoomAction}>
+      <Text style={styles.updateText}>{updateText}</Text>
+    </TouchableOpacity>
+  );
 };
 
 const componentStyles = StyleSheet.create({

@@ -1,3 +1,4 @@
+import React from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 
 const CreateRoomButton = (props) => {
@@ -88,6 +89,7 @@ const CreateRoomButton = (props) => {
           getError(error);
         });
     }
+    return;
   };
 
   //error handling

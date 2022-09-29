@@ -1,3 +1,4 @@
+import React from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 
 const DeleteRoomButton = (props) => {
@@ -34,26 +35,28 @@ const DeleteRoomButton = (props) => {
   //action for deleting a room
   const deleteRoomAction = () => {
     if (!editor) {
-    fetch(endpointurl + "rooms/" + room_name_d, {
-      method: "DELETE",
-      headers: {
-        Accept: "application/json",
-        Authorization: "Bearer " + apikey,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        console.log("Success:", result);
-        const deletedResult = result.deleted;
-
-        if (room_deleted) room_deleted(deletedResult);
+      fetch(endpointurl + "rooms/" + room_name_d, {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          Authorization: "Bearer " + apikey,
+          "Content-Type": "application/json",
+        },
       })
-      .catch((error) => {
-        console.error("Error:", error);
-        getError(error);
-      });
-  }};
+        .then((response) => response.json())
+        .then((result) => {
+          console.log("Success:", result);
+          const deletedResult = result.deleted;
+
+          if (room_deleted) room_deleted(deletedResult);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          getError(error);
+        });
+    }
+    return;
+  };
 
   //error handling
   const errorHandling = getError();
@@ -73,12 +76,11 @@ const DeleteRoomButton = (props) => {
       </View>
     );
   }
-    return (
-      <TouchableOpacity style={deleteButtonStyle} onPress={deleteRoomAction}>
-        <Text style={styles.deleteText}>{deleteText}</Text>
-      </TouchableOpacity>
-    );
-  
+  return (
+    <TouchableOpacity style={deleteButtonStyle} onPress={deleteRoomAction}>
+      <Text style={styles.deleteText}>{deleteText}</Text>
+    </TouchableOpacity>
+  );
 };
 
 const componentStyles = StyleSheet.create({

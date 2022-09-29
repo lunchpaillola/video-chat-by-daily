@@ -1,7 +1,7 @@
 {
   "displayName": "Video Chat by Daily",
   "defaultWidth": 600,
-  "defaultHeight": 500,
+  "defaultHeight":500,
   "components": "./index.js",
   "resizeY": true,
   "resizeX": true,

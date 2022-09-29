@@ -2,7 +2,7 @@
   "displayName": "Create Meeting Token Button",
   "defaultWidth": 400,
   "defaultHeight": 36,
-  "components": "./token.js",
+  "components": "./index.js",
   "resizeY": true,
   "resizeX": true,
   "icon": "./creatingmeetingtokenbutton.png",
