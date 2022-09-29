@@ -13,19 +13,19 @@
     },
     {
       "name": "CreateMeetingTokenButton",
-      "manifest": "./src/CreateMeetingTokenButton/tokenmanifest.json"
+      "manifest": "./src/CreateMeetingTokenButton/manifest.json"
     },
     {
       "name": "CreateRoomButton",
-      "manifest": "./src/CreateRoomButton/createmanifest.json"
+      "manifest": "./src/CreateRoomButton/manifest.json"
     },
     {
       "name": "DeleteRoomButton",
-      "manifest": "./src/DeleteRoomButton/deletemanifest.json"
+      "manifest": "./src/DeleteRoomButton/manifest.json"
     },
     {
       "name": "UpdateRoomButton",
-      "manifest": "./src/UpdateRoomButton/updatemanifest.json"
+      "manifest": "./src/UpdateRoomButton/manifest.json"
     }
   ],
   "iosInstallScript": "./scripts/install_ios.sh",
