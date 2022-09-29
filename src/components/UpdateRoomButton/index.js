@@ -111,11 +111,9 @@ const EditRoomButton = (props) => {
 
   if (editor) {
   return (
-    <View style={componentStyles.wrapper}>
       <TouchableOpacity style={updateButtonStyle}>
         <Text style={styles.updateText}>{updateText}</Text>
       </TouchableOpacity>
-    </View>
   );
 		}
 

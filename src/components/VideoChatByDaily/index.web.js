@@ -44,7 +44,7 @@ const DailyVideoChat = (props) => {
 
   function getError(e) {
     if (!url)
-      return 'Room url is not set in the "Video Call" tab';
+      return 'Room url is not set in the "Video Chat" component';
     if (e) return e;
   }
 

@@ -79,16 +79,13 @@ const DeleteRoomButton = (props) => {
 
   if (editor) {
   return (
-    <View style={componentStyles.wrapper}>
       <TouchableOpacity style={deleteButtonStyle}>
         <Text style={styles.deleteText}>{deleteText}</Text>
       </TouchableOpacity>
-    </View>
   );
 		}
     if (!editor) {
 			return (
-					
         <TouchableOpacity style={deleteButtonStyle} onPress={deleteRoomAction}>
         <Text style={styles.deleteText}>{deleteText}</Text>
     </TouchableOpacity>

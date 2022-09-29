@@ -1,4 +1,4 @@
-import {Text, View, StyleSheet, TouchableOpacity} from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 
 const CreateRoomButton = (props) => {
   const {
@@ -25,7 +25,7 @@ const CreateRoomButton = (props) => {
 
   const createRoomExp = Math.round(new Date(exp).getTime() / 1000);
   const createRoomNbf = Math.round(new Date(nbf).getTime() / 1000);
- 
+
   //ButtonStyles
   const createButtonStyle = {
     alignItems: "center",
@@ -88,9 +88,6 @@ const CreateRoomButton = (props) => {
       });
   };
 
-  
- 
-
   //error handling
   const errorHandling = getError();
 
@@ -106,27 +103,22 @@ const CreateRoomButton = (props) => {
       </View>
     );
   }
-		
 
   if (editor) {
-  return (
-    <View style={componentStyles.wrapper}>
+    return (
       <TouchableOpacity style={createButtonStyle}>
         <Text style={styles.createText}>{createText}</Text>
       </TouchableOpacity>
-    </View>
-  );
-		}
-    if (!editor) {
-			return (
-					
-							<TouchableOpacity style={createButtonStyle} onPress={createRoomAction}>
-									<Text style={styles.createText}>{createText}</Text>
-							</TouchableOpacity>
-			);
-		}
+    );
+  }
+  if (!editor) {
+    return (
+      <TouchableOpacity style={createButtonStyle} onPress={createRoomAction}>
+        <Text style={styles.createText}>{createText}</Text>
+      </TouchableOpacity>
+    );
+  }
 };
-
 
 const componentStyles = StyleSheet.create({
   wrapper: {
@@ -134,17 +126,17 @@ const componentStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-	statusWrapper: {
-			backgroundColor: "#d30",
-			padding: 16,
-			borderRadius: 5,
-			marginBottom: 16,
-	},
-	statusText: {
-			color: "#fff",
-			fontSize: 14,
-			fontWeight: "600",
-	}
+  statusWrapper: {
+    backgroundColor: "#d30",
+    padding: 16,
+    borderRadius: 5,
+    marginBottom: 16,
+  },
+  statusText: {
+    color: "#fff",
+    fontSize: 14,
+    fontWeight: "600",
+  },
 });
 
 export default CreateRoomButton;
