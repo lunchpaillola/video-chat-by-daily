@@ -2,7 +2,7 @@ import React from "react";
 import {Text, View, StyleSheet, TouchableOpacity} from "react-native";
 
 
-const Token = (props) => {
+const CreateMeetingTokenButton = (props) => {
   const {
     apikey,
     editor,
@@ -131,4 +131,4 @@ const componentStyles = StyleSheet.create({
 	}
 });
 
-export default Token;
+export default CreateMeetingTokenButton;

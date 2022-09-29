@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from "react-native";
 import DailyIframe from "@daily-co/daily-js";
 import videoImage from "./editor-image.png";
 
-const DailyVideoChat = (props) => {
+const VideoChatByDaily = (props) => {
   //props
   const { editor, token, url } = props;
   const ref = useRef(null);
@@ -102,4 +102,4 @@ const componentStyles = StyleSheet.create({
   },
 });
 
-export default DailyVideoChat
+export default VideoChatByDaily
