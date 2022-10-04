@@ -1,6 +1,5 @@
 import React from "react";
-import {Text, View, StyleSheet, TouchableOpacity} from "react-native";
-
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 
 const CreateMeetingTokenButton = (props) => {
   const {
@@ -32,14 +31,12 @@ const CreateMeetingTokenButton = (props) => {
     backgroundColor: tokenBackgroundColor,
     borderColor: tokenBorderColor,
     borderWidth: 2,
-    display:"flex",
+    display: "flex",
   };
-
 
   //starting the button onPress functions
 
   const endpointurl = "https://api.daily.co/v1/";
-
 
   //action for creating a meeting token
   const meetingTokenAction = () => {
@@ -73,13 +70,11 @@ const CreateMeetingTokenButton = (props) => {
       });
   };
 
-
   //error handling
   const errorHandling = getError();
 
   function getError(e) {
-    if (!apikey)
-      return 'API Key is not set in the "meeting token" component';
+    if (!apikey) return 'API Key is not set in the "meeting token" component';
     if (!room_name)
       return 'Room name is not set in the "meeting token" component';
     if (e) return e;
@@ -92,25 +87,25 @@ const CreateMeetingTokenButton = (props) => {
       </View>
     );
   }
-		
 
   if (editor) {
-  return (
-    <View style={componentStyles.wrapper}>
-						<TouchableOpacity style={meetingTokenStyle}>
-							<Text style={styles.tokenText}>{tokenText}</Text></TouchableOpacity>
-    </View>
-  );
-		}
+    return (
+      <View style={componentStyles.wrapper}>
+        <TouchableOpacity style={meetingTokenStyle}>
+          <Text style={styles.tokenText}>{tokenText}</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
 
-    if (!editor) {
-			return (
-        <TouchableOpacity style={meetingTokenStyle} onPress={meetingTokenAction}>
-								<Text style={styles.tokenText}>{tokenText}</Text></TouchableOpacity>
-			);
-		}
+  if (!editor) {
+    return (
+      <TouchableOpacity style={meetingTokenStyle} onPress={meetingTokenAction}>
+        <Text style={styles.tokenText}>{tokenText}</Text>
+      </TouchableOpacity>
+    );
+  }
 };
-
 
 const componentStyles = StyleSheet.create({
   wrapper: {
@@ -118,17 +113,17 @@ const componentStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-	statusWrapper: {
-			backgroundColor: "#d30",
-			padding: 16,
-			borderRadius: 5,
-			marginBottom: 16,
-	},
-	statusText: {
-			color: "#fff",
-			fontSize: 14,
-			fontWeight: "600",
-	}
+  statusWrapper: {
+    backgroundColor: "#d30",
+    padding: 16,
+    borderRadius: 5,
+    marginBottom: 16,
+  },
+  statusText: {
+    color: "#fff",
+    fontSize: 14,
+    fontWeight: "600",
+  },
 });
 
 export default CreateMeetingTokenButton;

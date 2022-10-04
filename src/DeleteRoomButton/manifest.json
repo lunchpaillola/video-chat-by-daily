@@ -2,7 +2,7 @@
   "displayName": "Delete Room Button",
   "defaultWidth": 400,
   "defaultHeight": 36,
-  "components": "./index.js",
+  "component": "./index.js",
   "resizeY": true,
   "resizeX": true,
   "icon": "./deleteroombutton.png",

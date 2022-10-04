@@ -1,8 +1,8 @@
 {
-  "displayName": "Create Meeting Token Button",
+  "displayName": "Daily Meeting Token",
   "defaultWidth": 400,
   "defaultHeight": 36,
-  "components": "./index.js",
+  "component": "./index.js",
   "resizeY": true,
   "resizeX": true,
   "icon": "./creatingmeetingtokenbutton.png",
@@ -13,39 +13,39 @@
       "type": "text",
       "helpText": "Sign up at daily.co for the api key"
     },
-      {
-        "name": "room_name",
-				 "displayName": "Room Name",
-        "type": "text"
-      },
-      {
-        "name": "username",
-				 "displayName": "Username",
-        "type": "text"
-      },
-      {
-        "name": "is_owner",
-				 "displayName": "Is Owner",
-        "type": "boolean",
-        "default": false
-      },
-      {
-        "name": "start_video_off_t",
-				 "displayName": "Start Video Off",
-        "type": "boolean",
-        "default": false
-      },
-      {
-        "name": "start_audio_off_t",
-				 "displayName": "Start Audio Off",
-        "type": "boolean",
-        "default": false
-      },
-      {
-        "name": "editMeetingToken",
-        "displayName": "Show button styles",
-        "type": "boolean",
-        "default": false
+    {
+      "name": "room_name",
+      "displayName": "Room Name",
+      "type": "text"
+    },
+    {
+      "name": "username",
+      "displayName": "Username",
+      "type": "text"
+    },
+    {
+      "name": "is_owner",
+      "displayName": "Is Owner",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "name": "start_video_off_t",
+      "displayName": "Start Video Off",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "name": "start_audio_off_t",
+      "displayName": "Start Audio Off",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "name": "editMeetingToken",
+      "displayName": "Show button styles",
+      "type": "boolean",
+      "default": false
     },
     {
       "name": "tokenText",
@@ -61,7 +61,7 @@
         "color": "@contrast:tokenBackgroundColor"
       }
     },
-   {
+    {
       "name": "tokenBackgroundColor",
       "displayName": "Button color",
       "type": "color",
@@ -69,7 +69,6 @@
       "enabled": {
         "editMeetingToken": true
       }
-      
     },
     {
       "name": "tokenBorderColor",
@@ -90,16 +89,16 @@
       },
       "control": { "type": "slider", "max": 20, "min": 0 }
     },
-      {
-        "name": "meeting_token_created",
-        "displayName": "Additional actions after a meeting token is created.",
-        "type": "action",
-        "arguments": [
-          {
-            "type": "text",
-            "displayName": "token"
-          }
-        ]
-      }
+    {
+      "name": "meeting_token_created",
+      "displayName": "Additional actions after a meeting token is created.",
+      "type": "action",
+      "arguments": [
+        {
+          "type": "text",
+          "displayName": "token"
+        }
+      ]
+    }
   ]
-  }
+}
