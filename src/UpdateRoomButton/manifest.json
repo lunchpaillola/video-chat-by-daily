@@ -11,7 +11,7 @@
       "name": "apikey",
       "displayName": "Your Daily API key",
       "type": "text",
-      "helpText": "Sign up at daily.co for the api key"
+      "helpText": "Sign up at [Daily](https://dashboard.daily.co/signup) for a free API key"
     },
     {
       "name": "room_name_u",
