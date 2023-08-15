@@ -11,15 +11,13 @@
     "publish": "adalo publish"
   },
   "devDependencies": {
-    "@adalo/cli": "^0.0.55",
-    "react": "^16.9.0",
-    "react-art": "^16.6.0",
-    "react-dom": "^16.9.0",
-    "react-native-web": "^0.9.5"
+    "@adalo/cli": "^0.0.57",
+    "react": "^18.2.0"
   },
   "dependencies": {
-    "@daily-co/daily-js": "^0.24.0",
-    "react-native-permissions": "^3.6.1",
-    "react-native-webview": "11.22.4"
+    "@daily-co/daily-js": "^0.48.0",
+    "react-native": "^0.72.4",
+    "react-native-permissions": "^3.8.4",
+    "react-native-webview": "13.3.1"
   }
 }
