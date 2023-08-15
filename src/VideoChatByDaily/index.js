@@ -18,7 +18,7 @@ const DailyVideoChat = (props) => {
     display: "flex",
   };
 
-  //video permissions update
+  //pushing permissions on ios and android
 
   if (Platform.OS === "ios") {
     const permissions = [];
