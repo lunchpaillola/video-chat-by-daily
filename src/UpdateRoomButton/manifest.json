@@ -64,6 +64,33 @@
       "helpText": "For private rooms. Participants without corresponding meeting tokens can request admission from a meeting owner. "
     },
     {
+      "name": "enable_cloud_recording",
+      "displayName": "Enable Cloud Recording",
+      "type": "text",
+      "control": {
+        "type": "menu",
+        "options": [
+          { "label": "cloud", "value": "cloud" },
+          { "label": "local", "value": "local" }
+        ]
+      },
+      "helpText": "Enables cloud recording in Daily's S3 bucket. Learn about costs at daily.co/pricing."
+    },
+    {
+      "name": "meeting_join_hook",
+      "displayName": "Meeting join Hook",
+      "type": "boolean",
+      "default": false,
+      "helpText": "An optional setting to set the meeting hoin hook."
+    },
+    {
+      "name": "eject_on_exp",
+      "displayName": "Eject on Expiration",
+      "type": "boolean",
+      "default": false,
+      "helpText": "When set, will eject on exp"
+    },
+    {
       "name": "start_video_off_u",
       "displayName": "Start Video Off",
       "type": "boolean",

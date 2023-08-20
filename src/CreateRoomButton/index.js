@@ -20,6 +20,11 @@ const CreateRoomButton = (props) => {
     createRounding,
     roomCreated,
     styles,
+    enable_cloud_recording,
+    meeting_join_hook,
+    eject_on_exp,
+
+
   } = props;
 
   //Converting time to js
@@ -69,6 +74,10 @@ const CreateRoomButton = (props) => {
             enable_knocking: enable_knocking,
             start_video_off: start_video_off,
             start_audio_off: start_audio_off,
+            enable_recording: enable_cloud_recording,
+            eject_at_room_exp: eject_on_exp,
+            meeting_join_hook: meeting_join_hook
+
           },
           privacy: privacy,
         }),

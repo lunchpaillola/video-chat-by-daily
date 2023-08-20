@@ -85,7 +85,7 @@
       "helpText": "An optional setting to set the meeting hoin hook."
     },
     {
-      "name": "eject on exp",
+      "name": "eject_on_exp",
       "displayName": "Eject on Expiration",
       "type": "boolean",
       "default": false,
