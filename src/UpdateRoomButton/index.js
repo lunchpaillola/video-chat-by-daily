@@ -5,14 +5,20 @@ const UpdateRoomButton = (props) => {
     apikey,
     editor,
     room_name_u,
-    privacy_u,
-    enable_chat_u,
-    owner_only_broadcast_u,
-    exp_u,
-    nbf_u,
-    enable_knocking_u,
-    start_video_off_u,
-    start_audio_off_u,
+    enable_prejoin_ui,
+    enable_chat,
+    owner_only_broadcast,
+    exp,
+    nbf,
+    enable_knocking,
+    start_video_off,
+    start_audio_off,
+    enable_hidden_participants,
+    enable_noise_cancellation_ui,
+    enable_hand_raising,
+    enable_emoji_reactions,
+    enable_pip_ui,
+    lang,
     updateText,
     updateBackgroundColor,
     updateBorderColor,
@@ -25,8 +31,8 @@ const UpdateRoomButton = (props) => {
   } = props;
 
   //Converting time to js
-  const updateRoomExp = Math.round(new Date(exp_u).getTime() / 1000);
-  const updateRoomNbf = Math.round(new Date(nbf_u).getTime() / 1000);
+  const updateRoomExp = Math.round(new Date(exp).getTime() / 1000);
+  const updateRoomNbf = Math.round(new Date(nbf).getTime() / 1000);
 
   //ButtonStyles
 
@@ -62,18 +68,24 @@ const UpdateRoomButton = (props) => {
           properties: {
             enable_network_ui: false,
             enable_new_call_ui: true,
-            enable_prejoin_ui: true,
+            enable_prejoin_ui: enable_prejoin_ui,
             enable_screenshare: false,
-            enable_chat: enable_chat_u,
-            owner_only_broadcast: owner_only_broadcast_u,
-            exp: updateRoomExp,
-            nbf: updateRoomNbf,
-            enable_knocking: enable_knocking_u,
-            start_video_off: start_video_off_u,
-            start_audio_off: start_audio_off_u,
+            enable_chat: enable_chat,
+            owner_only_broadcast: owner_only_broadcast,
+            enable_knocking: enable_knocking,
+            start_video_off: start_video_off,
+            start_audio_off: start_audio_off,
             enable_recording: enable_cloud_recording,
             eject_at_room_exp: eject_on_exp,
-            meeting_join_hook: meeting_join_hook
+            meeting_join_hook: meeting_join_hook,
+            enable_hidden_participants: enable_hidden_participants,
+            enable_noise_cancellation_ui: enable_noise_cancellation_ui,
+            enable_hand_raising: enable_hand_raising,
+            enable_emoji_reactions: enable_emoji_reactions,
+            enable_pip_ui: enable_pip_ui,
+            lang: lang,
+            exp: updateRoomExp,
+            nbf: updateRoomNbf,
           },
           privacy: privacy_u,
         }),

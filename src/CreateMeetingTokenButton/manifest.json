@@ -42,6 +42,30 @@
       "default": false
     },
     {
+      "name": "enable_recording",
+      "displayName": "Enable Recording",
+      "type": "text",
+      "control": {
+        "type": "menu",
+        "options": [
+          { "label": "cloud", "value": "cloud" },
+          { "label": "local", "value": "local" }
+        ]
+      }
+    },
+    {
+      "name": "enable_recording_ui",
+      "displayName": "Enable recording ui",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "name": "start_cloud_recording",
+      "displayName": "Start cloud recording",
+      "type": "boolean",
+      "default": false
+    },
+    {
       "name": "editMeetingToken",
       "displayName": "Show button styles",
       "type": "boolean",

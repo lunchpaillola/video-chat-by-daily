@@ -16,6 +16,10 @@ const CreateMeetingTokenButton = (props) => {
     tokenRounding,
     meeting_token_created,
     styles,
+    enable_recording_ui,
+    enable_recording,
+    start_cloud_recording
+
   } = props;
 
   //ButtonStyles
@@ -54,6 +58,10 @@ const CreateMeetingTokenButton = (props) => {
           user_name: username,
           start_video_off: start_video_off_t,
           start_audio_off: start_audio_off_t,
+          enable_recording_ui: enable_recording_ui,
+          enable_recording: enable_recording,
+          start_cloud_recording: start_cloud_recording
+
         },
       }),
     })

@@ -6,6 +6,11 @@
   "resizeY": true,
   "resizeX": true,
   "icon": "./video-thumbnail.png",
+  "layout": {
+    "sticky": true,
+    "shared": "SCALES_RELATIVE",
+    "mobile": "SCALES_RELATIVE"
+  },
   "props": [
     {
       "name": "url",

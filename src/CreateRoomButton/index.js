@@ -23,6 +23,13 @@ const CreateRoomButton = (props) => {
     enable_cloud_recording,
     meeting_join_hook,
     eject_on_exp,
+    enable_hidden_participants,
+    enable_noise_cancellation_ui,
+    enable_hand_raising,
+    enable_emoji_reactions,
+    enable_pip_ui,
+    lang
+    
 
 
   } = props;
@@ -76,7 +83,13 @@ const CreateRoomButton = (props) => {
             start_audio_off: start_audio_off,
             enable_recording: enable_cloud_recording,
             eject_at_room_exp: eject_on_exp,
-            meeting_join_hook: meeting_join_hook
+            meeting_join_hook: meeting_join_hook,
+            enable_hidden_participants: enable_hidden_participants,
+            enable_noise_cancellation_ui: enable_noise_cancellation_ui,
+            enable_hand_raising: enable_hand_raising,
+            enable_emoji_reactions: enable_emoji_reactions,
+            enable_pip_ui: enable_pip_ui,
+            lang: lang,
 
           },
           privacy: privacy,

@@ -26,47 +26,144 @@
         ]
       }
     },
-    {
-      "name": "nbf",
-      "displayName": "Time when the room will be available",
-      "type": "date",
-      "helpText": "If not set, users will be able to join a room as soon as it is created."
-    },
-    {
-      "name": "exp",
-      "displayName": "Time when the room will expire",
-      "type": "date",
-      "helpText": "If not set, users will be able to join this room until deleted."
+		{
+      "name": "uicontrols",
+      "displayName": "Call Interface Controls",
+      "type": "boolean",
+      "default": false
     },
     {
       "name": "enable_prejoin_ui",
       "displayName": "Enable Prejoin UI",
       "type": "boolean",
-      "default": true
+      "default": true,
+			"enabled": {
+        "uicontrols": true
+      }
     },
     {
       "name": "enable_chat",
       "displayName": "Enable Chat",
       "type": "boolean",
-      "default": true
+      "default": true,
+			"enabled": {
+        "uicontrols": true
+      }
+    },
+    {
+      "name": "enable_noise_cancellation_ui",
+      "displayName": "Enable Noise Cancellation",
+      "type": "boolean",
+      "default": true,
+			"enabled": {
+        "uicontrols": true
+      }
+    },
+    {
+      "name": "enable_hand_raising",
+      "displayName": "Enable Hand Raising",
+      "type": "boolean",
+      "default": true,
+			"enabled": {
+        "uicontrols": true
+      }
+    },
+    {
+      "name": "enable_emoji_reactions",
+      "displayName": "Enable Emoji Reactions",
+      "type": "boolean",
+      "default": true,
+			"enabled": {
+        "uicontrols": true
+      }
+    },
+    {
+      "name": "enable_pip_ui",
+      "displayName": "Enable PIP UI",
+      "type": "boolean",
+      "default": true,
+			"enabled": {
+        "uicontrols": true
+      }
+    },
+		 {
+      "name": "start_video_off",
+      "displayName": "Start Video Off",
+      "type": "boolean",
+      "default": false,
+			"enabled": {
+        "uicontrols": true
+      }
+    },
+    {
+      "name": "start_audio_off",
+      "displayName": "Start Audio Off",
+      "type": "boolean",
+      "default": false,
+				"enabled": {
+        "uicontrols": true
+      }
+    },
+    {
+      "name": "lang",
+      "displayName": "Language",
+      "type": "text",
+      "default": "user",
+      "control": {
+        "type": "menu",
+        "options": [
+          { "label": "English", "value": "en" },
+          { "label": "German", "value": "de" },
+          { "label": "Spanish", "value": "es" },
+          { "label": "Finnish", "value": "fi" },
+          { "label": "French", "value": "fr" },
+          { "label": "Italian", "value": "it" },
+          { "label": "Japanese", "value": "jp" },
+          { "label": "Georgian", "value": "ka" },
+          { "label": "Dutch", "value": "nl" },
+          { "label": "Norwegian", "value": "no" },
+          { "label": "Portuguese", "value": "pt" },
+          { "label": "Polish", "value": "pl" },
+          { "label": "Russian", "value": "ru" },
+          { "label": "Swedish", "value": "sv" },
+          { "label": "Turkish", "value": "tr" },
+          { "label": "User", "value": "user" }
+        ]
+      },
+      "helpText": "",
+			"enabled": {
+        "uicontrols": true
+      }
+    },
+		{
+      "name": "recording_broadcasting",
+      "displayName": "Recording & Broadcasting",
+      "type": "boolean",
+      "default": false
     },
     {
       "name": "owner_only_broadcast",
       "displayName": "Owner Only Broadcast",
       "type": "boolean",
       "default": false,
+     	"enabled": {
+        "recording_broadcasting": true
+      },
       "helpText": "If enabled, only meeting owners are allowed to turn on camera, unmute mic, and share screen."
     },
     {
-      "name": "enable_knocking",
-      "displayName": "Enable Knocking",
+      "name": "enable_hidden_participants",
+      "displayName": "Enable Hidden Participants",
       "type": "boolean",
-      "default": true,
-      "helpText": "For private rooms. Participants without corresponding meeting tokens can request admission from a meeting owner."
+      "default": false,
+     	"enabled": {
+        "recording_broadcasting": true
+      },
+      "helpText": "If enabled, only meeting owners are allowed to turn on camera, unmute mic, and share screen."
     },
     {
       "name": "enable_cloud_recording",
-      "displayName": "Enable Cloud Recording",
+      "displayName": "Enable Recording",
       "type": "text",
       "control": {
         "type": "menu",
@@ -75,33 +172,64 @@
           { "label": "local", "value": "local" }
         ]
       },
-      "helpText": "Enables cloud recording in Daily's S3 bucket. Learn about costs at daily.co/pricing."
+      "helpText": "Enables  recording in Daily's S3 bucket. Learn about costs at daily.co/pricing.",
+		"enabled": {
+        "recording_broadcasting": true
+      }
+    },
+		{
+      "name": "room_availability",
+      "displayName": "Advanced room settings",
+      "type": "boolean",
+      "default": false
+    },
+		{
+      "name": "enable_knocking",
+      "displayName": "Enable Knocking",
+      "type": "boolean",
+      "default": true,
+			"enabled": {
+        "room_availability": true
+      },
+      "helpText": "For private rooms. Participants without corresponding meeting tokens can request admission from a meeting owner."
     },
     {
       "name": "meeting_join_hook",
       "displayName": "Meeting join Hook",
       "type": "boolean",
       "default": false,
+				"enabled": {
+        "room_availability": true
+      },
       "helpText": "An optional setting to set the meeting hoin hook."
+    },
+		{
+      "name": "nbf",
+      "displayName": "Time when the room will be available",
+      "type": "date",
+			"enabled": {
+        "room_availability": true
+      },
+      "helpText": "If not set, users will be able to join a room as soon as it is created."
+    },
+    {
+      "name": "exp",
+      "displayName": "Time when the room will expire",
+      "type": "date",
+				"enabled": {
+        "room_availability": true
+      },
+      "helpText": "If not set, users will be able to join this room until deleted."
     },
     {
       "name": "eject_on_exp",
       "displayName": "Eject on Expiration",
       "type": "boolean",
       "default": false,
+			"enabled": {
+        "room_availability": true
+      },
       "helpText": "When set, will eject on exp"
-    },
-    {
-      "name": "start_video_off",
-      "displayName": "Start Video Off",
-      "type": "boolean",
-      "default": false
-    },
-    {
-      "name": "start_audio_off",
-      "displayName": "Start Audio Off",
-      "type": "boolean",
-      "default": false
     },
     {
       "name": "editCreateRoomButton",
