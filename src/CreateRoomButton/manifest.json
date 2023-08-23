@@ -196,8 +196,7 @@
     {
       "name": "meeting_join_hook",
       "displayName": "Meeting join Hook",
-      "type": "boolean",
-      "default": false,
+      "type": "text",
 				"enabled": {
         "room_availability": true
       },

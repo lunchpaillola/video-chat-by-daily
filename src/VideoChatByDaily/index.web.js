@@ -1,34 +1,67 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useCallback } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import DailyIframe from "@daily-co/daily-js";
 import videoImage from "./editor-image.png";
+
+let globalCallFrame = null;
 
 const DailyVideoChat = (props) => {
   //props
   const { editor, token, url } = props;
   const ref = useRef(null);
-  //function for joining a call
-  function JoinCall() {
-    useEffect(() => {
-      const parentElement = ref.current;
-      const callFrame = DailyIframe.createFrame(parentElement, {});
-      if (token) {
-        callFrame.join({
-          url: url,
-          token: token,
-          showLeaveButton: true,
-          activeSpeakerMode: false,
-        });
+  const callFrameRef = useRef(null);
+
+  const handleLeftMeeting = () => {
+    globalCallFrame.leave();
+    globalCallFrame.destroy();
+  };
+
+  const createAndJoinCallFrame = () => {
+    globalCallFrame = DailyIframe.createFrame(ref.current, {});
+    callFrameRef.current = globalCallFrame;
+    globalCallFrame.join({
+      url: url,
+      token: token,
+      showLeaveButton: true,
+      activeSpeakerMode: false,
+    });
+    globalCallFrame.on("left-meeting", handleLeftMeeting);
+  };
+
+  const joinCall = useCallback(() => {
+    if (editor) {
+      // Check if in editor mode
+      return; // Exit the function early if in editor mode
+    }
+    if (globalCallFrame) {
+      globalCallFrame.leave();
+      globalCallFrame.destroy().then(() => {
+        globalCallFrame = null;
+        createAndJoinCallFrame();
+      });
+    } else {
+      createAndJoinCallFrame();
+    }
+  }, []);
+
+  useEffect(() => {
+    joinCall();
+
+    return () => {
+      console.log('Cleanup function start');
+      // This anonymous function is the clean-up function
+      globalCallFrame.off("left-meeting", handleLeftMeeting);
+      if (globalCallFrame) {
+        // If callFrameRef.current exists
+        globalCallFrame.leave();
+        globalCallFrame.destroy(); // Destroy the call frame
       }
-      if (!token) {
-        callFrame.join({
-          url: url,
-          showLeaveButton: true,
-          activeSpeakerMode: false,
-        });
-      }
-    }, []);
-  }
+     /* const iframeElement = ref.current.querySelector("iframe");
+      if (iframeElement && iframeElement.parentNode) {
+        iframeElement.parentNode.removeChild(iframeElement);
+      }*/
+    };
+  }, [joinCall]);
 
   //error handling
   const errorHandling = getError();
@@ -66,7 +99,7 @@ const DailyVideoChat = (props) => {
 
   if (!editor) {
     return (
-      <View style={{ width: "100%", height: "100%" }}>
+      <View style={{ width: "100%", height: "100%", backgroundColor: "red" }}>
         <div
           ref={ref}
           style={{
@@ -75,9 +108,7 @@ const DailyVideoChat = (props) => {
             height: "100%",
             padding: 0,
           }}
-        >
-          {JoinCall()}
-        </div>
+        ></div>
       </View>
     );
   }
@@ -102,4 +133,4 @@ const componentStyles = StyleSheet.create({
   },
 });
 
-export default DailyVideoChat
+export default DailyVideoChat;
