@@ -28,6 +28,7 @@ const CreateRoomButton = (props) => {
     enable_hand_raising,
     enable_emoji_reactions,
     enable_pip_ui,
+    enable_people_ui,
     lang
     
 
@@ -89,6 +90,7 @@ const CreateRoomButton = (props) => {
             enable_hand_raising: enable_hand_raising,
             enable_emoji_reactions: enable_emoji_reactions,
             enable_pip_ui: enable_pip_ui,
+            enable_people_ui: enable_people_ui,
             lang: lang,
 
           },
