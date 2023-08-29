@@ -12,7 +12,6 @@ const DailyVideoChat = (props) => {
   const callFrameRef = useRef(null);
 
   const handleLeftMeeting = () => {
-    globalCallFrame.leave();
     globalCallFrame.destroy();
   };
 
@@ -30,6 +29,7 @@ const DailyVideoChat = (props) => {
     joinOptions.token = token;
   }
     globalCallFrame.join(joinOptions);
+    //globalCallFrame.on("left-meeting", handleLeftMeeting);
   
   }};
 
@@ -56,9 +56,9 @@ const DailyVideoChat = (props) => {
     joinCall();
 
     return () => {
-      //globalCallFrame.off("left-meeting", handleLeftMeeting);
       if (globalCallFrame) {
       globalCallFrame.leave();
+      globalCallFrame.destroy();
       }
     };
   }, [joinCall, url]);
@@ -99,7 +99,7 @@ const DailyVideoChat = (props) => {
 
   if (!editor) {
     return (
-      <View style={{ width: "100%", height: "100%", backgroundColor: "red" }}>
+      <View style={{ width: "100%", height: "100%"}}>
         <div
           ref={ref}
           style={{
