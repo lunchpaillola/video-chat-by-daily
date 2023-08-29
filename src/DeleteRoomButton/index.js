@@ -60,12 +60,11 @@ const DeleteRoomButton = (props) => {
   //error handling
   const errorHandling = getError();
 
-  function getError(e) {
+  function getError() {
     if (!apikey)
       return 'API Key is not set in the "Delete Room Button" component';
     if (!room_name_d)
       return 'Room name is not set in the "Delete Room Button" component';
-    if (e) return e;
   }
 
   if (errorHandling && editor) {
@@ -76,7 +75,7 @@ const DeleteRoomButton = (props) => {
     );
   }
   return (
-    <TouchableOpacity style={deleteButtonStyle} onPress={deleteRoomAction}>
+    <TouchableOpacity style={deleteButtonStyle} onPress={errorHandling ? null : deleteRoomAction}>
       <Text style={styles.deleteText}>{deleteText}</Text>
     </TouchableOpacity>
   );

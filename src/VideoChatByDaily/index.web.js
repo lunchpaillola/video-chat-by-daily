@@ -11,9 +11,6 @@ const DailyVideoChat = (props) => {
   const ref = useRef(null);
   const callFrameRef = useRef(null);
 
-  const handleLeftMeeting = () => {
-    globalCallFrame.destroy();
-  };
 
   const createAndJoinCallFrame = () => {
     if(ref.current){
@@ -29,7 +26,6 @@ const DailyVideoChat = (props) => {
     joinOptions.token = token;
   }
     globalCallFrame.join(joinOptions);
-    //globalCallFrame.on("left-meeting", handleLeftMeeting);
   
   }};
 
@@ -66,9 +62,8 @@ const DailyVideoChat = (props) => {
   //error handling
   const errorHandling = getError();
 
-  function getError(e) {
+  function getError() {
     if (!url) return 'Room url is not set in the "Video Chat" component';
-    if (e) return e;
   }
 
   if (errorHandling && editor) {

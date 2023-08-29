@@ -89,7 +89,6 @@ const CreateRoomButton = (props) => {
             enable_noise_cancellation_ui: enable_noise_cancellation_ui,
             enable_hand_raising: enable_hand_raising,
             enable_emoji_reactions: enable_emoji_reactions,
-            enable_pip_ui: enable_pip_ui,
             enable_people_ui: enable_people_ui,
             lang: lang,
 
@@ -117,7 +116,7 @@ const CreateRoomButton = (props) => {
   //error handling
   const errorHandling = getError();
 
-  function getError(e) {
+  function getError() {
     if (!apikey)
       return 'API Key is not set in the "Create Room Button" component';
   }
@@ -130,7 +129,7 @@ const CreateRoomButton = (props) => {
     );
   }
   return (
-    <TouchableOpacity style={createButtonStyle} onPress={createRoomAction}>
+    <TouchableOpacity style={createButtonStyle} onPress={errorHandling ? null : createRoomAction}>
       <Text style={styles.createText}>{createText}</Text>
     </TouchableOpacity>
   );

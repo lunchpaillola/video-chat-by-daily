@@ -78,15 +78,6 @@
       }
     },
     {
-      "name": "enable_pip_ui",
-      "displayName": "Enable PIP UI",
-      "type": "boolean",
-      "default": true,
-			"enabled": {
-        "uicontrols": true
-      }
-    },
-    {
       "name": "enable_people_ui",
       "displayName": "Enable people UI",
       "type": "boolean",

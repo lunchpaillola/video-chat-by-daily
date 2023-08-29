@@ -109,12 +109,11 @@ const UpdateRoomButton = (props) => {
   //error handling
   const errorHandling = getError();
 
-  function getError(e) {
+  function getError() {
     if (!apikey)
       return 'API Key is not set in the "Update Room Button" component';
     if (!room_name_u)
       return 'Room name is not set in the "Update Room Button" component';
-    if (e) return e;
   }
 
   if (errorHandling && editor) {
@@ -125,7 +124,7 @@ const UpdateRoomButton = (props) => {
     );
   }
   return (
-    <TouchableOpacity style={updateButtonStyle} onPress={updateRoomAction}>
+    <TouchableOpacity style={updateButtonStyle} onPress={errorHandling ? null : updateRoomAction}>
       <Text style={styles.updateText}>{updateText}</Text>
     </TouchableOpacity>
   );

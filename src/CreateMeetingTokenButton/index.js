@@ -77,14 +77,13 @@ const CreateMeetingTokenButton = (props) => {
       });
   };
 
-  //error handling
+  //handling missing props
   const errorHandling = getError();
 
-  function getError(e) {
+  function getError() {
     if (!apikey) return 'API Key is not set in the "meeting token" component';
     if (!room_name)
       return 'Room name is not set in the "meeting token" component';
-    if (e) return e;
   }
 
   if (errorHandling && editor) {
@@ -107,7 +106,7 @@ const CreateMeetingTokenButton = (props) => {
 
   if (!editor) {
     return (
-      <TouchableOpacity style={meetingTokenStyle} onPress={meetingTokenAction}>
+      <TouchableOpacity style={meetingTokenStyle} onPress={errorHandling ? null : meetingTokenAction}>
         <Text style={styles.tokenText}>{tokenText}</Text>
       </TouchableOpacity>
     );

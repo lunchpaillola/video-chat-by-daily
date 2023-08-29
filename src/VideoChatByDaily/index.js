@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Text, View, StyleSheet, Alert } from "react-native";
+import { Image, Text, View, StyleSheet } from "react-native";
 import videoImage from "./editor-image.png";
 import { WebView } from "react-native-webview";
 /*import {
@@ -120,9 +120,8 @@ const DailyVideoChat = (props) => {
   //error handling
   const errorHandling = getError();
 
-  function getError(e) {
+  function getError() {
     if (!url) return 'Room url is not set in the "Video chat" component';
-    if (e) return e;
   }
 
   if (errorHandling && !editor) {
