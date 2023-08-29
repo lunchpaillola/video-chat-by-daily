@@ -69,15 +69,6 @@
         "uicontrols": true
       }
     },
-    {
-      "name": "enable_pip_ui",
-      "displayName": "Enable PIP UI",
-      "type": "boolean",
-      "default": true,
-			"enabled": {
-        "uicontrols": true
-      }
-    },
 		 {
       "name": "start_video_off",
       "displayName": "Start Video Off",

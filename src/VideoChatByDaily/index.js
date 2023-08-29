@@ -2,11 +2,11 @@ import React from "react";
 import { Image, Text, View, StyleSheet, Alert } from "react-native";
 import videoImage from "./editor-image.png";
 import { WebView } from "react-native-webview";
-import {
+/*import {
   checkMultiple,
   requestMultiple,
   PERMISSIONS,
-} from "react-native-permissions";
+} from "react-native-permissions";*/
 
 const DailyVideoChat = (props) => {
   const { editor, token, url } = props;
@@ -18,6 +18,7 @@ const DailyVideoChat = (props) => {
     display: "flex",
   };
 
+  /*
   //pushing permissions on ios and android
 
   if (Platform.OS === "ios") {
@@ -111,7 +112,7 @@ const DailyVideoChat = (props) => {
           .catch((error) => {});
       })
       .catch((error) => {});
-  }
+  } */
 
   //url for the video call
   const videoCallURL = token ? url + "?t=" + token : url;

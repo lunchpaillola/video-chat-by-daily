@@ -17,7 +17,6 @@ const UpdateRoomButton = (props) => {
     enable_noise_cancellation_ui,
     enable_hand_raising,
     enable_emoji_reactions,
-    enable_pip_ui,
     lang,
     updateText,
     updateBackgroundColor,
@@ -28,6 +27,7 @@ const UpdateRoomButton = (props) => {
     enable_cloud_recording,
     meeting_join_hook,
     eject_on_exp,
+    privacy
   } = props;
 
   //Converting time to js
@@ -82,18 +82,15 @@ const UpdateRoomButton = (props) => {
             enable_noise_cancellation_ui: enable_noise_cancellation_ui,
             enable_hand_raising: enable_hand_raising,
             enable_emoji_reactions: enable_emoji_reactions,
-            enable_pip_ui: enable_pip_ui,
             lang: lang,
             exp: updateRoomExp,
             nbf: updateRoomNbf,
           },
-          privacy: privacy_u,
+          privacy: privacy,
         }),
       })
         .then((response) => response.json())
         .then((result) => {
-          console.log("Success:", result);
-          console.log("room name:", result.name);
           const name = result.name;
           const roomUrl = result.url;
           const id = result.id;
@@ -120,7 +117,7 @@ const UpdateRoomButton = (props) => {
     if (e) return e;
   }
 
-  if (errorHandling && !editor) {
+  if (errorHandling && editor) {
     return (
       <View style={componentStyles.statusWrapper}>
         <Text style={componentStyles.statusText}>{errorHandling}</Text>

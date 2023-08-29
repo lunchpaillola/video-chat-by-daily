@@ -67,7 +67,6 @@ const CreateMeetingTokenButton = (props) => {
     })
       .then((response) => response.json())
       .then((result) => {
-        console.log("Success:", result);
         const token = result.token;
 
         if (meeting_token_created) meeting_token_created(token);
@@ -88,7 +87,7 @@ const CreateMeetingTokenButton = (props) => {
     if (e) return e;
   }
 
-  if (errorHandling && !editor) {
+  if (errorHandling && editor) {
     return (
       <View style={componentStyles.statusWrapper}>
         <Text style={componentStyles.statusText}>{errorHandling}</Text>

@@ -17,51 +17,51 @@ const DailyVideoChat = (props) => {
   };
 
   const createAndJoinCallFrame = () => {
+    if(ref.current){
     globalCallFrame = DailyIframe.createFrame(ref.current, {});
     callFrameRef.current = globalCallFrame;
-    globalCallFrame.join({
+    const joinOptions = {
       url: url,
-      token: token,
       showLeaveButton: true,
       activeSpeakerMode: false,
-    });
-    globalCallFrame.on("left-meeting", handleLeftMeeting);
-  };
+    };
+    // Only add token if it exists
+  if (token) {
+    joinOptions.token = token;
+  }
+    globalCallFrame.join(joinOptions);
+  
+  }};
 
   const joinCall = useCallback(() => {
-    if (editor) {
+    if (editor || !url) {
       // Check if in editor mode
       return; // Exit the function early if in editor mode
     }
     if (globalCallFrame) {
       globalCallFrame.leave();
       globalCallFrame.destroy().then(() => {
-        globalCallFrame = null;
-        createAndJoinCallFrame();
+      globalCallFrame = null;
+      createAndJoinCallFrame();
+      }).catch((err) => {
       });
+      
+      ;
     } else {
       createAndJoinCallFrame();
     }
-  }, []);
+  }, [url]);
 
   useEffect(() => {
     joinCall();
 
     return () => {
-      console.log('Cleanup function start');
-      // This anonymous function is the clean-up function
-      globalCallFrame.off("left-meeting", handleLeftMeeting);
+      //globalCallFrame.off("left-meeting", handleLeftMeeting);
       if (globalCallFrame) {
-        // If callFrameRef.current exists
-        globalCallFrame.leave();
-        globalCallFrame.destroy(); // Destroy the call frame
+      globalCallFrame.leave();
       }
-     /* const iframeElement = ref.current.querySelector("iframe");
-      if (iframeElement && iframeElement.parentNode) {
-        iframeElement.parentNode.removeChild(iframeElement);
-      }*/
     };
-  }, [joinCall]);
+  }, [joinCall, url]);
 
   //error handling
   const errorHandling = getError();
@@ -71,7 +71,7 @@ const DailyVideoChat = (props) => {
     if (e) return e;
   }
 
-  if (errorHandling && !editor) {
+  if (errorHandling && editor) {
     return (
       <View style={componentStyles.statusWrapper}>
         <Text style={componentStyles.statusText}> {errorHandling}</Text>

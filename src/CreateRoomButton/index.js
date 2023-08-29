@@ -99,8 +99,6 @@ const CreateRoomButton = (props) => {
       })
         .then((response) => response.json())
         .then((result) => {
-          console.log("Success:", result);
-          console.log("room name:", result.name);
           const name = result.name;
           const roomUrl = result.url;
           const id = result.id;
@@ -124,7 +122,7 @@ const CreateRoomButton = (props) => {
       return 'API Key is not set in the "Create Room Button" component';
   }
 
-  if (errorHandling && !editor) {
+  if (errorHandling && editor) {
     return (
       <View style={componentStyles.statusWrapper}>
         <Text style={componentStyles.statusText}>{errorHandling}</Text>

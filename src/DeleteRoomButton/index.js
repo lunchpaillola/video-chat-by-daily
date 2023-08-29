@@ -45,7 +45,6 @@ const DeleteRoomButton = (props) => {
       })
         .then((response) => response.json())
         .then((result) => {
-          console.log("Success:", result);
           const deletedResult = result.deleted;
 
           if (room_deleted) room_deleted(deletedResult);
@@ -69,7 +68,7 @@ const DeleteRoomButton = (props) => {
     if (e) return e;
   }
 
-  if (errorHandling && !editor) {
+  if (errorHandling && editor) {
     return (
       <View style={componentStyles.statusWrapper}>
         <Text style={componentStyles.statusText}>{errorHandling}</Text>
