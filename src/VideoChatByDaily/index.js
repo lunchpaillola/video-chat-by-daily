@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Text, View, StyleSheet, Alert } from "react-native";
+import { Image, Text, View, StyleSheet } from "react-native";
 import videoImage from "./editor-image.png";
 import { WebView } from "react-native-webview";
 
@@ -19,12 +19,11 @@ const DailyVideoChat = (props) => {
   //error handling
   const errorHandling = getError();
 
-  function getError(e) {
+  function getError() {
     if (!url) return 'Room url is not set in the "Video chat" component';
-    if (e) return e;
   }
 
-  if (errorHandling && !editor) {
+  if (errorHandling && editor) {
     return (
       <View style={componentStyles.statusWrapper}>
         <Text style={componentStyles.statusText}>{errorHandling}</Text>
@@ -39,29 +38,31 @@ const DailyVideoChat = (props) => {
       </View>
     );
   }
-  if (!editor && url) {
+  if (!editor) {
     return (
       <View style={componentStyles.wrapper}>
         <View style={{ width: "100%", height: "100%" }}>
-          <WebView
-            source={{ uri: videoCallURL }}
-            domStorageEnabled={true}
-            allowFileAccess={true}
-            originWhitelist={["*"]}
-            javaScriptEnabled={true}
-            useWebKit={true}
-            allowsInlineMediaPlayback={true}
-            style={{
-              flex: 1,
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          />
+          { url ? (
+            <WebView
+              source={{ uri: videoCallURL }}
+              domStorageEnabled={true}
+              allowFileAccess={true}
+              originWhitelist={["*"]}
+              javaScriptEnabled={true}
+              useWebKit={true}
+              allowsInlineMediaPlayback={true}
+              style={{
+                flex: 1,
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            />
+          ) : null }
         </View>
       </View>
     );
-  }
+  }  
 };
 
 const componentStyles = StyleSheet.create({
