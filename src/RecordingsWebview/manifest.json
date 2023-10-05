@@ -1,0 +1,27 @@
+{
+  "displayName": "Daily Recordings Webview",
+  "defaultWidth": 600,
+  "defaultHeight": 500,
+  "component": "./index.js",
+  "resizeY": true,
+  "resizeX": true,
+  "icon": "./video-thumbnail.png",
+  "layout": {
+    "sticky": true,
+    "shared": "SCALES_RELATIVE",
+    "mobile": "SCALES_RELATIVE"
+  },
+  "props": [
+    {
+      "name": "apikey",
+      "displayName": "Your Daily API key",
+      "type": "text",
+      "helpText": "Sign up at [Daily](https://dashboard.daily.co/signup) for a free API key"
+    },
+    {
+      "name": "room_name",
+      "displayName": "Room Name",
+      "type": "text"
+    }
+  ]
+}
