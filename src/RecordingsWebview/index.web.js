@@ -1,69 +1,83 @@
-import React, { useEffect, useRef, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import DailyIframe from "@daily-co/daily-js";
 import videoImage from "./editor-image.png";
 
-let globalCallFrame = null;
-
-const DailyVideoChat = (props) => {
+const DailyRecordingWebview = (props) => {
   //props
-  const { editor, token, url } = props;
-  const ref = useRef(null);
-  const callFrameRef = useRef(null);
+  const { editor, room_name, apikey } = props;
+
+  const endpointurl = "https://api.daily.co/v1/";
 
 
-  const createAndJoinCallFrame = () => {
-    if(ref.current){
-    globalCallFrame = DailyIframe.createFrame(ref.current, {});
-    callFrameRef.current = globalCallFrame;
-    const joinOptions = {
-      url: url,
-      showLeaveButton: true,
-      activeSpeakerMode: false,
-    };
-    // Only add token if it exists
-  if (token) {
-    joinOptions.token = token;
-  }
-    globalCallFrame.join(joinOptions);
-  
-  }};
+  let recordingId; // Declare a variable to store the recording ID
+  const [recordingLink, setRecordingLink] = useState(null); // Declare recordingLink state
 
-  const joinCall = useCallback(() => {
-    if (editor || !url) {
-      // Check if in editor mode
-      return; // Exit the function early if in editor mode
+  //action for recording a room
+  const getRecordingId = () => {
+    if (!editor) {
+      const urlWithQuery = `${endpointurl}recordings/?room_name=${room_name}`;
+      console.log('urlWithQury', urlWithQuery);
+      fetch(urlWithQuery, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          Authorization: "Bearer " + apikey,
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((result) => {
+          console.log('recordID',result, result.data[0].id);
+          recordingId = result.data[0].id
+          getRecordingAccessLink();
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          getError(error);
+        });
+        
     }
-    if (globalCallFrame) {
-      globalCallFrame.leave();
-      globalCallFrame.destroy().then(() => {
-      globalCallFrame = null;
-      createAndJoinCallFrame();
-      }).catch((err) => {
-      });
-      
-      ;
-    } else {
-      createAndJoinCallFrame();
+  };
+
+  //action for recording a room
+  const getRecordingAccessLink = () => {
+    if (!editor) {
+      const urlWithQuery = `${endpointurl}recordings/${recordingId}/access-link`;
+      console.log('urlWithQury', urlWithQuery);
+      fetch(urlWithQuery, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          Authorization: "Bearer " + apikey,
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((result) => {
+          const accessLink = result
+          console.log('accessLink', accessLink);
+          const link = result.download_link;
+          console.log('recordingLink', link);
+          setRecordingLink(link);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          getError(error);
+        });
+        
     }
-  }, [url]);
-
-  useEffect(() => {
-    joinCall();
-
-    return () => {
-      if (globalCallFrame) {
-      globalCallFrame.leave();
-      globalCallFrame.destroy();
-      }
-    };
-  }, [joinCall, url]);
-
+  };
   //error handling
   const errorHandling = getError();
 
+
+// Usage in useEffect
+useEffect(() => {
+  getRecordingId(); // Call the function to fetch and store the recording ID
+}, []);
+
   function getError() {
-    if (!url) return 'Room url is not set in the "Video Chat" component';
+    if (!room_name) return 'Room name is not set in the "recording" component';
   }
 
   if (errorHandling && editor) {
@@ -94,16 +108,18 @@ const DailyVideoChat = (props) => {
 
   if (!editor) {
     return (
-      <View style={{ width: "100%", height: "100%"}}>
-        <div
-          ref={ref}
-          style={{
-            display: "block",
-            width: "100%",
-            height: "100%",
-            padding: 0,
-          }}
-        ></div>
+      <View style={{ width: "100%", height: "100%" }}>
+        {recordingLink ? (
+        <iframe
+          width="100%"
+          height="100%"
+          src={recordingLink}
+          frameborder="0"
+          allowfullscreen
+        ></iframe>
+    ) : (
+      null
+    )}
       </View>
     );
   }
@@ -128,4 +144,4 @@ const componentStyles = StyleSheet.create({
   },
 });
 
-export default DailyVideoChat;
+export default DailyRecordingWebview;

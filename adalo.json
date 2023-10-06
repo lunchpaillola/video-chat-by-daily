@@ -26,7 +26,12 @@
     {
       "name": "UpdateRoomButton",
       "manifest": "./src/UpdateRoomButton/manifest.json"
+    },
+    {
+      "name": "DailyRecordingWebview",
+      "manifest": "./src/RecordingsWebview/manifest.json"
     }
+
   ],
   "iosInstallScript": "./scripts/install_ios.sh",
   "androidInstallScript": "./scripts/install_android.sh"
