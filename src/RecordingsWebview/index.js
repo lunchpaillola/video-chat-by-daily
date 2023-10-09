@@ -1,30 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { Image, Text, View, StyleSheet } from "react-native";
+import React, { Component } from "react";
+import PropTypes from 'prop-types';
+import { View, Image} from "react-native";
 import videoImage from "./editor-image.png";
 import { WebView } from "react-native-webview";
 
-const DailyRecordingWebview = (props) => {
-  const { editor, room_name, apikey } = props;
+class DailyRecordingWebview extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      recordingLink: null,
+    };
+  }
 
-  const imageStyle = {
-    width: "100%",
-    height: 500,
-    resizeMode: "contain",
-    display: "flex",
-  };
+  componentDidMount() {
+    this.getRecordingId();
+  }
 
+  getRecordingId() {
+    const { editor, room_name, apikey } = this.props;
+    const endpointurl = "https://api.daily.co/v1/";
 
-  const endpointurl = "https://api.daily.co/v1/";
-
-
-  let recordingId; // Declare a variable to store the recording ID
-  const [recordingLink, setRecordingLink] = useState(null); // Declare recordingLink state
-
-  //action for recording a room
-  const getRecordingId = () => {
     if (!editor) {
       const urlWithQuery = `${endpointurl}recordings/?room_name=${room_name}`;
-      console.log('urlWithQury', urlWithQuery);
+      console.log('urlWithQuery', urlWithQuery);
       fetch(urlWithQuery, {
         method: "GET",
         headers: {
@@ -35,23 +33,24 @@ const DailyRecordingWebview = (props) => {
       })
         .then((response) => response.json())
         .then((result) => {
-          console.log('recordID',result, result.data[0].id);
-          recordingId = result.data[0].id
-          getRecordingAccessLink();
+          console.log('recordID', result, result.data[0].id);
+          const recordingId = result.data[0].id;
+          this.getRecordingAccessLink(recordingId);
         })
         .catch((error) => {
           console.error("Error:", error);
-          getError(error);
+          this.getError(error);
         });
-        
     }
-  };
+  }
 
-  //action for recording a room
-  const getRecordingAccessLink = () => {
+  getRecordingAccessLink(recordingId) {
+    const { editor, apikey } = this.props;
+    const endpointurl = "https://api.daily.co/v1/";
+
     if (!editor) {
       const urlWithQuery = `${endpointurl}recordings/${recordingId}/access-link`;
-      console.log('urlWithQury', urlWithQuery);
+      console.log('urlWithQuery', urlWithQuery);
       fetch(urlWithQuery, {
         method: "GET",
         headers: {
@@ -62,53 +61,56 @@ const DailyRecordingWebview = (props) => {
       })
         .then((response) => response.json())
         .then((result) => {
-          const accessLink = result
+          const accessLink = result;
           console.log('accessLink', accessLink);
           const link = result.download_link;
           console.log('recordingLink', link);
-          setRecordingLink(link);
+          this.setState({ recordingLink: link });
         })
         .catch((error) => {
           console.error("Error:", error);
-          getError(error);
+          this.getError(error);
         });
-        
     }
-  };
-  //error handling
-  const errorHandling = getError();
+  }
 
-
-// Usage in useEffect
-useEffect(() => {
-  getRecordingId(); // Call the function to fetch and store the recording ID
-}, []);
-
-  function getError() {
+  getError() {
+    const { room_name } = this.props;
     if (!room_name) return 'Room name is not set in the "recording" component';
   }
 
+  render() {
+    const { editor } = this.props;
+    const { recordingLink } = this.state;
 
-  if (errorHandling && editor) {
-    return (
-      <View style={componentStyles.statusWrapper}>
-        <Text style={componentStyles.statusText}>{errorHandling}</Text>
-      </View>
-    );
-  }
+    /*if (errorHandling && editor) {
+      return (
+        <View style={componentStyles.statusWrapper}>
+          <Text style={componentStyles.statusText}> {errorHandling}</Text>
+        </View>
+      ); 
+    }*/
 
-  if (editor) {
-    return (
-      <View style={componentStyles.wrapper}>
-        <Image style={imageStyle} source={videoImage} />
-      </View>
-    );
-  }
-  if (!editor) {
-    return (
-      <View style={componentStyles.wrapper}>
+    if (editor) {
+      return (
         <View style={{ width: "100%", height: "100%" }}>
-          { room_name ? (
+          <Image
+            source={videoImage}
+            style={{
+              flex: 1,
+              width: "100%",
+              height: "100%",
+              resizeMode: "cover",
+            }}
+          />
+        </View>
+      );
+    }
+
+    if (!editor) {
+      return (
+        <View style={{ width: "100%", height: "100%" }}>
+          {recordingLink ? (
             <WebView
               source={{ uri: recordingLink }}
               domStorageEnabled={true}
@@ -124,30 +126,19 @@ useEffect(() => {
                 alignItems: "center",
               }}
             />
-          ) : null }
+          ) : (
+            null
+          )}
         </View>
-      </View>
-    );
-  }  
-};
+      );
+    }
+  }
+}
 
-const componentStyles = StyleSheet.create({
-  wrapper: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  statusWrapper: {
-    backgroundColor: "#d30",
-    padding: 16,
-    borderRadius: 5,
-    marginBottom: 16,
-  },
-  statusText: {
-    color: "#fff",
-    fontSize: 14,
-    fontWeight: "600",
-  },
-});
+DailyRecordingWebview.propTypes = {
+  editor: PropTypes.bool.isRequired,
+  room_name: PropTypes.string.isRequired,
+  apikey: PropTypes.string.isRequired,
+};
 
 export default DailyRecordingWebview;
