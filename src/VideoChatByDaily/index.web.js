@@ -41,8 +41,6 @@ const DailyVideoChat = (props) => {
       createAndJoinCallFrame();
       }).catch((err) => {
       });
-      
-      ;
     } else {
       createAndJoinCallFrame();
     }

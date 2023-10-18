@@ -8,15 +8,13 @@ const DailyRecordingWebview = (props) => {
 
   const endpointurl = "https://api.daily.co/v1/";
 
-
   let recordingId; // Declare a variable to store the recording ID
   const [recordingLink, setRecordingLink] = useState(null); // Declare recordingLink state
 
-  //action for recording a room
-  const getRecordingId = () => {
-    if (!editor) {
+  // Conditionally fetch the recording ID and access link only if room_name is not null
+  useEffect(() => {
+    if (!editor && room_name) {
       const urlWithQuery = `${endpointurl}recordings/?room_name=${room_name}`;
-      console.log('urlWithQury', urlWithQuery);
       fetch(urlWithQuery, {
         method: "GET",
         headers: {
@@ -27,23 +25,20 @@ const DailyRecordingWebview = (props) => {
       })
         .then((response) => response.json())
         .then((result) => {
-          console.log('recordID',result, result.data[0].id);
-          recordingId = result.data[0].id
+          recordingId = result.data[0].id;
           getRecordingAccessLink();
         })
         .catch((error) => {
           console.error("Error:", error);
           getError(error);
         });
-        
     }
-  };
+  }, [room_name, editor, apikey]);
 
-  //action for recording a room
+  // Action for getting recording access link
   const getRecordingAccessLink = () => {
-    if (!editor) {
+    if (!editor && recordingId) {
       const urlWithQuery = `${endpointurl}recordings/${recordingId}/access-link`;
-      console.log('urlWithQury', urlWithQuery);
       fetch(urlWithQuery, {
         method: "GET",
         headers: {
@@ -54,41 +49,33 @@ const DailyRecordingWebview = (props) => {
       })
         .then((response) => response.json())
         .then((result) => {
-          const accessLink = result
-          console.log('accessLink', accessLink);
           const link = result.download_link;
-          console.log('recordingLink', link);
           setRecordingLink(link);
         })
         .catch((error) => {
           console.error("Error:", error);
           getError(error);
         });
-        
     }
   };
-  //error handling
+
+  // Error handling
   const errorHandling = getError();
-
-
-// Usage in useEffect
-useEffect(() => {
-  getRecordingId(); // Call the function to fetch and store the recording ID
-}, []);
 
   function getError() {
     if (!room_name) return 'Room name is not set in the "recording" component';
+    return null;
   }
 
   if (errorHandling && editor) {
     return (
       <View style={componentStyles.statusWrapper}>
-        <Text style={componentStyles.statusText}> {errorHandling}</Text>
+        <Text style={componentStyles.statusText}>{errorHandling}</Text>
       </View>
     );
   }
 
-  //Styles and rendering
+  // Styles and rendering
   if (editor) {
     return (
       <View style={{ width: "100%", height: "100%" }}>
@@ -110,16 +97,13 @@ useEffect(() => {
     return (
       <View style={{ width: "100%", height: "100%" }}>
         {recordingLink ? (
-        <iframe
-          width="100%"
-          height="100%"
-          src={recordingLink}
-          frameborder="0"
-          allowfullscreen
-        ></iframe>
-    ) : (
-      null
-    )}
+          <iframe
+            width="100%"
+            height="100%"
+            src={recordingLink}
+            allowFullScreen
+          ></iframe>
+        ) : null}
       </View>
     );
   }
