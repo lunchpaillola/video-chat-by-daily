@@ -59,7 +59,6 @@ const CreateRoomButton = (props) => {
         body: JSON.stringify({
           properties: {
             enable_network_ui: false,
-            enable_new_call_ui: true,
             enable_prejoin_ui: enable_prejoin_ui,
             exp: createRoomExp,
             nbf: createRoomNbf,
