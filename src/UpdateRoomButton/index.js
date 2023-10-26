@@ -67,7 +67,6 @@ const UpdateRoomButton = (props) => {
         body: JSON.stringify({
           properties: {
             enable_network_ui: false,
-            enable_new_call_ui: true,
             enable_prejoin_ui: enable_prejoin_ui,
             enable_screenshare: false,
             enable_chat: enable_chat,
