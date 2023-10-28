@@ -9,7 +9,8 @@ class DailyRecordingWebview extends Component {
     this.state = {
       recordingLink: null,
       room_name: props.room_name, 
-      apikey: props.apikey
+      apikey: props.apikey,
+      _height: props._height
     };
   }
 
@@ -84,11 +85,11 @@ class DailyRecordingWebview extends Component {
   }
 
   render() {
-    const {room_name } = this.props;
+    const {room_name, _height } = this.props;
     const { recordingLink } = this.state;
 
       return (
-        <View style={{ width: "100%", height: "100%" }}>
+        <View style={{ width: "100%", height: _height }}>
           {recordingLink && room_name ? (
             <WebView
               source={{ uri: recordingLink }}
@@ -117,6 +118,7 @@ class DailyRecordingWebview extends Component {
 DailyRecordingWebview.propTypes = {
   room_name: PropTypes.string.isRequired,
   apikey: PropTypes.string.isRequired,
+  _height: PropTypes.string.isRequired
 };
 
 export default DailyRecordingWebview;

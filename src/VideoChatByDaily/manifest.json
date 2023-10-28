@@ -1,10 +1,10 @@
 {
   "displayName": "Video Chat by Daily",
   "defaultWidth": 600,
-  "defaultHeight": 500,
+  "defaultHeight": 750,
   "component": "./index.js",
-  "resizeY": true,
   "resizeX": true,
+  "resizeY": true,
   "icon": "./video-thumbnail.png",
   "layout": {
     "sticky": true,
@@ -23,5 +23,6 @@
       "type": "text",
       "helpText": "Optional. [Meeting Tokens](https://docs.daily.co/reference/rest-api/meeting-tokens) configure the video session on a per-user basis."
     }
+    
   ]
 }

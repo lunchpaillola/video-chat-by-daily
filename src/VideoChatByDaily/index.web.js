@@ -1,33 +1,34 @@
 import React, { useEffect, useRef, useCallback } from "react";
-import { View, Text, StyleSheet } from "react-native";
 import DailyIframe from "@daily-co/daily-js";
 import videoImage from "./editor-image.png";
+import PropTypes from "prop-types";
 
 let globalCallFrame = null;
 
 const DailyVideoChat = (props) => {
   //props
-  const { editor, token, url } = props;
+  const { editor, token, url, _height } = props;
   const ref = useRef(null);
   const callFrameRef = useRef(null);
+  
 
 
   const createAndJoinCallFrame = () => {
-    if(ref.current){
-    globalCallFrame = DailyIframe.createFrame(ref.current, {});
-    callFrameRef.current = globalCallFrame;
-    const joinOptions = {
-      url: url,
-      showLeaveButton: true,
-      activeSpeakerMode: false,
-    };
-    // Only add token if it exists
-  if (token) {
-    joinOptions.token = token;
-  }
-    globalCallFrame.join(joinOptions);
-  
-  }};
+    if (ref.current) {
+      globalCallFrame = DailyIframe.createFrame(ref.current, {});
+      callFrameRef.current = globalCallFrame;
+      const joinOptions = {
+        url: url,
+        showLeaveButton: true,
+        activeSpeakerMode: false,
+      };
+      // Only add token if it exists
+      if (token) {
+        joinOptions.token = token;
+      }
+      globalCallFrame.join(joinOptions);
+    }
+  };
 
   const joinCall = useCallback(() => {
     if (editor || !url) {
@@ -36,11 +37,13 @@ const DailyVideoChat = (props) => {
     }
     if (globalCallFrame) {
       globalCallFrame.leave();
-      globalCallFrame.destroy().then(() => {
-      globalCallFrame = null;
-      createAndJoinCallFrame();
-      }).catch((err) => {
-      });
+      globalCallFrame
+        .destroy()
+        .then(() => {
+          globalCallFrame = null;
+          createAndJoinCallFrame();
+        })
+        .catch(() => {});
     } else {
       createAndJoinCallFrame();
     }
@@ -51,8 +54,8 @@ const DailyVideoChat = (props) => {
 
     return () => {
       if (globalCallFrame) {
-      globalCallFrame.leave();
-      globalCallFrame.destroy();
+        globalCallFrame.leave();
+        globalCallFrame.destroy();
       }
     };
   }, [joinCall, url]);
@@ -66,48 +69,44 @@ const DailyVideoChat = (props) => {
 
   if (errorHandling && editor) {
     return (
-      <View style={componentStyles.statusWrapper}>
-        <Text style={componentStyles.statusText}> {errorHandling}</Text>
-      </View>
+      <div style={componentStyles.statusWrapper}>
+        <p style={componentStyles.statusText}> {errorHandling}</p>
+      </div>
     );
   }
 
   //Styles and rendering
   if (editor) {
     return (
-      <View style={{ width: "100%", height: "100%" }}>
-        <img
-          src={videoImage}
-          style={{
-            display: "block",
-            objectFit: "fill",
-            width: "100%",
-            height: "100%",
-            padding: 0,
-          }}
-        />
-      </View>
+      <img
+        src={videoImage}
+        style={{
+          display: "block",
+          objectFit: "fill",
+          width: "100%",
+          height: "100%",
+          padding: 0,
+        }}
+      />
     );
   }
 
   if (!editor) {
     return (
-      <View style={{ width: "100%", height: "100%"}}>
-        <div
-          ref={ref}
-          style={{
-            display: "block",
-            width: "100%",
-            height: "100%",
-            padding: 0,
-          }}
-        ></div>
-      </View>
+      <div
+        ref={ref}
+        style={{
+          display: "block",
+          width: "100%",
+          height: _height,
+          padding: 0,
+        }}
+      ></div>
     );
   }
 };
 
-const componentStyles = StyleSheet.create({
+const componentStyles = {
   wrapper: {
     display: "flex",
     alignItems: "center",
@@ -115,15 +114,22 @@ const componentStyles = StyleSheet.create({
   },
   statusWrapper: {
     backgroundColor: "#d30",
-    padding: 16,
-    borderRadius: 5,
-    marginBottom: 16,
+    padding: "16px",
+    borderRadius: "5px",
+    marginBottom: "16px",
   },
   statusText: {
     color: "#fff",
-    fontSize: 14,
+    fontSize: "14px",
     fontWeight: "600",
   },
-});
+};
+
+DailyVideoChat.propTypes = {
+  editor: PropTypes.bool.isRequired,
+  token: PropTypes.string,
+  url: PropTypes.string.isRequired,
+  _height: PropTypes.number.isRequired,
+};
 
 export default DailyVideoChat;

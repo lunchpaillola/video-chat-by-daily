@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import videoImage from "./editor-image.png";
+import PropTypes from 'prop-types';
 
 const DailyRecordingWebview = (props) => {
   //props
-  const { editor, room_name, apikey } = props;
+  const { editor, room_name, apikey, _height } = props;
 
   const endpointurl = "https://api.daily.co/v1/";
 
@@ -85,7 +86,7 @@ const DailyRecordingWebview = (props) => {
             display: "block",
             objectFit: "fill",
             width: "100%",
-            height: "100%",
+            height: _height,
             padding: 0,
           }}
         />
@@ -95,11 +96,14 @@ const DailyRecordingWebview = (props) => {
 
   if (!editor) {
     return (
-      <View style={{ width: "100%", height: "100%" }}>
+      <View style={{ width: "100%", height: _height }}>
         {recordingLink ? (
           <iframe
-            width="100%"
-            height="100%"
+            style={{ 
+              width :"100%",
+              height :_height,
+              border:  "none",
+            }}
             src={recordingLink}
             allowFullScreen
           ></iframe>
@@ -107,6 +111,13 @@ const DailyRecordingWebview = (props) => {
       </View>
     );
   }
+};
+
+DailyRecordingWebview.propTypes = {
+  editor: PropTypes.bool,
+  room_name: PropTypes.string.isRequired,
+  apikey: PropTypes.string.isRequired,
+  _height: PropTypes.string.isRequired
 };
 
 const componentStyles = StyleSheet.create({

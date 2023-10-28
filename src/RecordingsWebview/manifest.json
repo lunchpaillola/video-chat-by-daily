@@ -1,7 +1,7 @@
 {
   "displayName": "Daily Recordings Webview",
   "defaultWidth": 600,
-  "defaultHeight": 500,
+  "defaultHeight": 750,
   "component": "./index.js",
   "resizeY": true,
   "resizeX": true,
