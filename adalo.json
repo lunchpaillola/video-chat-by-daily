@@ -1,10 +1,10 @@
 {
-  "author": "Daily",
-  "description": "Quickly add reliable video chats or video calls to your app with the official Daily video component. Great for your education, social, fitness, event, or sales tool apps! The component includes custom colors, host controls, a pre-join call UX, and the ability to create, update and delete video rooms. Use the component for any of your video communication needs.",
+  "author": "Lunch Pail Labs",
+  "description": "Add video chats or calls to your app with the Daily video component for Adalo, built and managed by Daily development partner, Lunch Pail Labs. Ideal for education, social, fitness, events, sales apps, or any video communication needs.",
   "logo": "./logo.png",
   "displayName": "Video Chat and Conferencing",
   "demoAppURL": "https://previewer.adalo.com/cd2ebd72-9e57-468e-aaa5-fd6eec972283",
-  "supportURL": "help@daily.co",
+  "supportURL": "https://lunchpaillabs.notion.site/Daily-Kit-for-Adalo-by-Lunch-Pail-Labs-b4a773602d884b21bcd306b454cfcd62",
   "requiresThirdPartySubscription": true,
   "components": [
     {
