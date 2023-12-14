@@ -1,5 +1,5 @@
 {
-  "displayName": "Daily Recordings Webview",
+  "displayName": "AudioOnlyView",
   "defaultWidth": 600,
   "defaultHeight": 750,
   "component": "./index.js",
@@ -13,14 +13,8 @@
   },
   "props": [
     {
-      "name": "apikey",
-      "displayName": "Your Daily API key",
-      "type": "text",
-      "helpText": "Sign up at [Daily](https://dashboard.daily.co/signup) for a free API key"
-    },
-    {
-      "name": "room_name",
-      "displayName": "Room Name",
+      "name": "url",
+      "displayName": "VideoCallUrl",
       "type": "text"
     }
   ]

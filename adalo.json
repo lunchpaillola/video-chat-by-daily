@@ -30,6 +30,10 @@
     {
       "name": "DailyRecordingWebview",
       "manifest": "./src/RecordingsWebview/manifest.json"
+    },
+    {
+      "name": "AudioOnlyView",
+      "manifest": "./src/AudioOnlyView/manifest.json"
     }
 
   ],

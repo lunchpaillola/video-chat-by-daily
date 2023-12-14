@@ -1,124 +1,145 @@
-import React, { Component } from "react";
-import PropTypes from 'prop-types';
-import { View} from "react-native";
-import { WebView } from "react-native-webview";
+import React from "react";
+import { Text, View, Button } from "react-native";
+import PropTypes from "prop-types";
 
-class DailyRecordingWebview extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      recordingLink: null,
-      room_name: props.room_name, 
-      apikey: props.apikey,
-      _height: props._height
-    };
-  }
-
-  componentDidMount() {
-    this.getRecordingId();
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.room_name !== prevProps.room_name) {
-      this.getRecordingId();
-    }
-  }
-  
-  
-
-
-  getRecordingId() {
-    const {room_name, apikey } = this.props;
-    const endpointurl = "https://api.daily.co/v1/";
-
-    if (room_name) {
-      const urlWithQuery = `${endpointurl}recordings/?room_name=${room_name}`;
-      fetch(urlWithQuery, {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          Authorization: "Bearer " + apikey,
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((result) => {
-          const recordingId = result.data[0].id;
-          this.getRecordingAccessLink(recordingId);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          this.getError(error);
-        });
-    }
-  }
-
-  getRecordingAccessLink(recordingId) {
-    const {room_name, apikey } = this.props;
-    const endpointurl = "https://api.daily.co/v1/";
-
-    if (room_name) {
-      const urlWithQuery = `${endpointurl}recordings/${recordingId}/access-link`;
-      fetch(urlWithQuery, {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          Authorization: "Bearer " + apikey,
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((result) => {
-          const link = result.download_link;
-          this.setState({ recordingLink: link });
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          this.getError(error);
-        });
-    }
-  }
-
-  getError() {
-    const { room_name } = this.props;
-    if (!room_name) return 'Room name is not set in the "recording" component';
-  }
-
-  render() {
-    const {room_name, _height } = this.props;
-    const { recordingLink } = this.state;
-
-      return (
-        <View style={{ width: "100%", height: _height }}>
-          {recordingLink && room_name ? (
-            <WebView
-              source={{ uri: recordingLink }}
-              domStorageEnabled={true}
-              allowFileAccess={true}
-              originWhitelist={["*"]}
-              javaScriptEnabled={true}
-              useWebKit={true}
-              allowsInlineMediaPlayback={true}
+const AudioOnlyView = (props) => {
+  const { _height } = props;
+  return (
+    <View
+      style={{ backgroundColor: "#131A24", height: _height, color: "white" }}
+    >
+      <View
+        style={{
+          padding: 16,
+          overflowY: "auto",
+          height: _height - 60,
+        }}
+      >
+        <View
+          style={{
+            display: "grid",
+            gridAutoFlow: "row",
+            gridAutoRows: "max-content",
+            gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))",
+            gap: 4,
+          }}
+        >
+          {Array.from({ length: 15 }, (_, index) => (
+            <View
+              key={index}
               style={{
-                flex: 1,
+                borderRadius: 8,
+                padding: 8,
+                display: "flex",
                 flexDirection: "column",
-                justifyContent: "center",
                 alignItems: "center",
+                overflowY: "auto",
               }}
-            />
-          ) : (
-            null
-          )}
+            >
+              <View style={{ position: "relative" }}>
+                <View
+                  style={{
+                    backgroundColor: "#2B3E56",
+                    borderRadius: 50,
+                    width: 64,
+                    height: 64,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginBottom: 8,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 24,
+                      color: "#FFF",
+                      // Additional styling for the text to be properly aligned and styled
+                    }}
+                  >
+                    {index % 3 === 0 ? "J" : index % 3 === 1 ? "S" : "B"}{" "}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    position: "absolute",
+                    bottom: 0,
+                    left: 0,
+                    marginBottom: 8,
+                    marginLeft: 8,
+                  }}
+                >
+                  {/* <View style={[tw`icon-circle`]}>
+                               <i className="fas fa-microphone-slash text-xs text-white"></i> 
+                              </View>*/}
+                </View>
+                <View
+                  style={{
+                    position: "absolute",
+                    bottom: 0,
+                    right: 0,
+                    marginBottom: 8,
+                    marginRight: 8,
+                  }}
+                >
+                  {/* <View style={[tw`icon-circle`]}>
+                                 {/*  <i className="fas fa-ellipsis-h text-xs text-white"></i>
+                              </View> */}
+                </View>
+              </View>
+              <View style={{ alignItems: "center" }}>
+                <Text style={{ fontSize: 12, color: "#fff" }}>
+                  {index % 3 === 0 ? "JT" : index % 3 === 1 ? "Sara" : "Billie"}
+                </Text>
+                <Text style={{ fontSize: 12, color: "#fff" }}>
+                  {index % 3 === 0 ? "Host" : "Speaker"}
+                </Text>
+              </View>
+            </View>
+          ))}
         </View>
-      );
-  
-  }
-}
-
-DailyRecordingWebview.propTypes = {
-  room_name: PropTypes.string.isRequired,
-  apikey: PropTypes.string.isRequired,
-  _height: PropTypes.string.isRequired
+      </View>
+      <View
+        style={{
+          height: 60,
+          position: "absolute",
+          bottom: 0,
+          width: "100%",
+          borderTopWidth: 1,
+          borderTopColor: "#333",
+        }}
+      >
+        <View
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            padding: 16,
+            backgroundColor: "#131A24",
+          }}
+        >
+          {/*<View style={[tw`icon-circle flex flex-col items-center justify-center`]}>
+                 <StyledIcon name="microphone-slash" size={24} color="#FFF" className="bg-[#424242] rounded-full p-2" />
+                    <Text style={[tw`text-xs text-white mt-1`]}>Mute</Text>
+                  </View>*/}
+          <Button
+            color="#FF0000"
+            onPress={() => {
+              // Handle button press
+            }}
+          >
+            Leave
+          </Button>
+        </View>
+      </View>
+    </View>
+  );
 };
 
-export default DailyRecordingWebview;
+AudioOnlyView.propTypes = {
+  editor: PropTypes.bool,
+  token: PropTypes.string,
+  url: PropTypes.string,
+  _height: AudioOnlyView.number,
+};
+
+export default AudioOnlyView;
