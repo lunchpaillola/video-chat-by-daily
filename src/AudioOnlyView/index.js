@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, Button } from "react-native";
+import { Text, View, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 
 const AudioOnlyView = (props) => {
@@ -105,30 +105,66 @@ const AudioOnlyView = (props) => {
           bottom: 0,
           width: "100%",
           borderTopWidth: 1,
+          marginBottom: 32,
+          paddingTop: 32,
           borderTopColor: "#333",
+          backgroundColor: "#131A24",
         }}
       >
         <View
           style={{
             display: "flex",
             justifyContent: "space-between",
+            flex: 1,
+            flexDirection: "row",
             alignItems: "center",
-            padding: 16,
+            paddingHorizontal: 16,
             backgroundColor: "#131A24",
           }}
         >
+          <View
+            style={{
+              backgroundColor: "#333",
+              paddingHorizontal: 24,
+              paddingVertical: 24,
+              borderRadius: 9999,
+            }}
+          ></View>
+          <TouchableOpacity
+            style={{
+              backgroundColor: "#FF0000", // Button background color
+              paddingHorizontal: 24, // Horizontal padding
+              paddingVertical: 8, // Vertical padding
+              borderRadius: 9999, // Fully rounded corners
+              alignItems: "center", // Center children horizontally
+              justifyContent: "center", // Center children vertically
+            }}
+            onPress={() => {
+              // Handle button press
+            }}
+          >
+            <Text
+              style={{
+                fontWeight: "bold",
+                color: "white", // Text color, not fontColor
+                fontSize: 16,
+              }}
+            >
+              Leave
+            </Text>
+          </TouchableOpacity>
           {/*<View style={[tw`icon-circle flex flex-col items-center justify-center`]}>
                  <StyledIcon name="microphone-slash" size={24} color="#FFF" className="bg-[#424242] rounded-full p-2" />
                     <Text style={[tw`text-xs text-white mt-1`]}>Mute</Text>
                   </View>*/}
-          <Button
+          {/*<Button
             color="#FF0000"
             onPress={() => {
               // Handle button press
             }}
           >
             Leave
-          </Button>
+          </Button> */}
         </View>
       </View>
     </View>
