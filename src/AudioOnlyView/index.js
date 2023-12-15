@@ -24,7 +24,7 @@ const AudioOnlyView = (props) => {
             gap: 4,
           }}
         >
-          {Array.from({ length: 15 }, (_, index) => (
+          {Array.from({ length: 21 }, (_, index) => (
             <View
               key={index}
               style={{
